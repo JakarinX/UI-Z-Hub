@@ -70,23 +70,23 @@ do
 
 
     Tabs.Main:AddButton({
-        Title = "Button",
-        Description = "Very important button",
+        Title = "Username Changer",
+        Description = "You can press the button to Username Changer and wait a few seconds.",
         Callback = function()
             Window:Dialog({
-                Title = "Title",
-                Content = "This is a dialog",
+                Title = "Are you sure you want Username Changer?",
+                Content = "After pressing it the game may freeze temporarily.",
                 Buttons = {
                     {
                         Title = "Confirm",
                         Callback = function()
-                            print("Confirmed the dialog.")
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/JakarinX/UI-Z-Hub/main/Username%20Changer"))()
                         end
                     },
                     {
                         Title = "Cancel",
                         Callback = function()
-                            print("Cancelled the dialog.")
+                            print("Cancel Username Changer")
                         end
                     }
                 }
@@ -95,7 +95,7 @@ do
     })
 
 
-    
+
     local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
         Title = "Dropdown",
         Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
