@@ -22,6 +22,26 @@ local Tabs = {
 local Options = Fluent.Options
 
 do
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "Slider",
+        Description = "This is a slider",
+        Default = 36,
+        Min = 36,
+        Max = 200,
+        Rounding = 1,
+        Callback = function(Value)
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        print("Slider changed:", Value)
+    end)
+
+    Slider:SetValue(3)
+end
+
+do
     Fluent:Notify({
         Title = "Notification",
         Content = "This is a notification",
