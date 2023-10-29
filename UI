@@ -25,14 +25,15 @@ do
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "Walk Speed",
         Description = "Move the slider to increase or decrease your speed.",
-        Default = 36,
-        Min = 36,
-        Max = 200,
+        Default = 2,
+        Min = 0,
+        Max = 5,
         Rounding = 1,
         Callback = function(Value)
             print("Slider was changed:", Value)
         end
     })
+end
 
 do
     Fluent:Notify({
