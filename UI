@@ -22,20 +22,6 @@ local Tabs = {
 local Options = Fluent.Options
 
 do
-    local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "Slider",
-        Description = "This is a slider",
-        Default = 2,
-        Min = 0,
-        Max = 5,
-        Rounding = 1,
-        Callback = function(Value)
-            print("Slider was changed:", Value)
-        end
-    })
-end
-
-do
     Fluent:Notify({
         Title = "Notification",
         Content = "This is a notification",
