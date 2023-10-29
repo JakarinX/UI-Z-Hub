@@ -28,8 +28,8 @@ do
     })
 
     local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "Slider",
-        Description = "This is a slider",
+        Title = "Walk Speed",
+        Description = "You can move the slider To increase speed and can reduce speed.",
         Default = 36,
         Min = 36,
         Max = 200,
