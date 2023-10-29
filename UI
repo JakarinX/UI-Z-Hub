@@ -22,12 +22,12 @@ local Tabs = {
 local Options = Fluent.Options
 
 do
-    Tabs.Main:AddParagraph({
+    Tabs.General:AddParagraph({
         Title = "lnformation",
-        Content = "This tab is about general things such as Walk Speed ​​FOV and Username Changer. I would like to emphasize that Username Changer is a fake name so that others can still see your real name, which Z Hub doesn't know, but if I were to guess. The system may think that the name in Username Changer is your real name. If someone reports you from the game, you will not be banned using your real name."
+        Content = "This tab is about general things such as Walk Speed ​​FOV and Username Changer I would like to emphasize that Username Changer is a fake name so that others can still see your real name which Z Hub doesn't know, but if I were to guess The system may think that the name in Username Changer is your real name If someone reports you from the game you will not be banned using your real name."
     })
 
-    local Slider = Tabs.Main:AddSlider("Slider", {
+    local Slider = Tabs.General:AddSlider("Slider", {
         Title = "Slider",
         Description = "This is a slider",
         Default = 36,
