@@ -225,7 +225,6 @@ InterfaceManager:SetFolder("FluentScriptHub")
 SaveManager:SetFolder("FluentScriptHub/specific-game")
 
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-InterfaceManager:BuildPlayer(Tabs.Main)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
 
