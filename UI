@@ -15,7 +15,7 @@ local Window = Fluent:CreateWindow({
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     General = Window:AddTab({ Title = "General Tab", Icon = "home" }),
-    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Main = Window:AddTab({ Title = "General Tab", Icon = "home" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
@@ -24,7 +24,7 @@ local Options = Fluent.Options
 do
     Tabs.Main:AddParagraph({
         Title = "lnformation",
-        Content = "This tab is about general things such as Walk Speed ​​FOV and Username Changer I would like to emphasize that Username Changer is a fake name so that others can still see your real name which Z Hub doesn't know, but if I were to guess The system may think that the name in Username Changer is your real name If someone reports you from the game you will not be banned using your real name."
+        Content = "Username Changer is a fake name, but others can still see your real name. But the reporting system may think that Username Changer is your real name."
     })
 
 
@@ -38,6 +38,26 @@ do
         Rounding = 1,
         Callback = function(Value)
             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        print("Slider changed:", Value)
+    end)
+
+    Slider:SetValue(3)
+
+
+
+    local Slider = Tabs.Main:AddSlider("Slider", {
+        Title = "FOV",
+        Description = "You can move the slider to increase Fov and decrease Fov.",
+        Default = 70,
+        Min = 70,
+        Max = 360,
+        Rounding = 1,
+        Callback = function(Value)
+            game.Workspace.Camera.FieldOfView = Value
         end
     })
 
