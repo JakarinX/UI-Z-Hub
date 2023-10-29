@@ -14,13 +14,19 @@ local Window = Fluent:CreateWindow({
 
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
-    Main = Window:AddTab({ Title = "General Tab", Icon = "home" }),
+    General = Window:AddTab({ Title = "General Tab", Icon = "home" }),
     Main = Window:AddTab({ Title = "     • Main", Icon = "" }),
     Combat = Window:AddTab({ Title = "Combat", Icon = "sword" }),
     AutoParryV1 = Window:AddTab({ Title = "     • Auto ParryV1", Icon = "" }),
     ESP = Window:AddTab({ Title = "ESP", Icon = "user" }),
+    ESPSettings = Window:AddTab({ Title = "     • ESP Settings", Icon = "" }),
+    ESPBox = Window:AddTab({ Title = "     • ESP Box", Icon = "" }),
+    ESPHealthBar = Window:AddTab({ Title = "     • ESP Health Bar", Icon = "" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
+
+InterfaceManager:BuildPlayer(Tabs.Main)
+
 
 local Options = Fluent.Options
 
