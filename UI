@@ -207,9 +207,6 @@ end
 -- SaveManager (Allows you to have a configuration system)
 -- InterfaceManager (Allows you to have a interface managment system)
 
--- Tab
-InterfaceManager:BuildPlayer(Tabs.Main)
-
 -- Hand the library over to our managers
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
@@ -228,6 +225,7 @@ InterfaceManager:SetFolder("FluentScriptHub")
 SaveManager:SetFolder("FluentScriptHub/specific-game")
 
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+InterfaceManager:BuildPlayer(Tabs.Main)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
 
