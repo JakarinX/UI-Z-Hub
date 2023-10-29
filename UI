@@ -78,12 +78,12 @@ do
     local Slider = Tabs.Main:AddSlider("Slider", {
         Title = "Slider",
         Description = "This is a slider",
-        Default = 2,
-        Min = 0,
-        Max = 5,
+        Default = 36,
+        Min = 36,
+        Max = 200,
         Rounding = 1,
         Callback = function(Value)
-            print("Slider was changed:", Value)
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
         end
     })
 
