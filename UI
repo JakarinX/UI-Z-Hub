@@ -22,81 +22,16 @@ local Tabs = {
 local Options = Fluent.Options
 
 do
-    Tabs.General:AddParagraph({
+    Tabs.Main:AddParagraph({
         Title = "lnformation",
         Content = "This tab is about general things such as Walk Speed ​​FOV and Username Changer I would like to emphasize that Username Changer is a fake name so that others can still see your real name which Z Hub doesn't know, but if I were to guess The system may think that the name in Username Changer is your real name If someone reports you from the game you will not be banned using your real name."
     })
 
-    local Slider = Tabs.General:AddSlider("Slider", {
+
+
+    local Slider = Tabs.Main:AddSlider("Slider", {
         Title = "Walk Speed",
         Description = "You can move the slider To increase speed and can reduce speed.",
-        Default = 36,
-        Min = 36,
-        Max = 200,
-        Rounding = 1,
-        Callback = function(Value)
-            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-        end
-    })
-end
-
-do
-    Fluent:Notify({
-        Title = "Notification",
-        Content = "This is a notification",
-        SubContent = "SubContent", -- Optional
-        Duration = 5 -- Set to nil to make the notification not disappear
-    })
-
-
-
-    Tabs.Main:AddParagraph({
-        Title = "Paragraph",
-        Content = "This is a paragraph.\nSecond line!"
-    })
-
-
-
-    Tabs.Main:AddButton({
-        Title = "Button",
-        Description = "Very important button",
-        Callback = function()
-            Window:Dialog({
-                Title = "Title",
-                Content = "This is a dialog",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            print("Confirmed the dialog.")
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
-                }
-            })
-        end
-    })
-
-
-
-    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
-
-    Toggle:OnChanged(function()
-        print("Toggle changed:", Options.MyToggle.Value)
-    end)
-
-    Options.MyToggle:SetValue(false)
-
-
-    
-    local Slider = Tabs.Main:AddSlider("Slider", {
-        Title = "Slider",
-        Description = "This is a slider",
         Default = 36,
         Min = 36,
         Max = 200,
