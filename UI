@@ -15,7 +15,7 @@ local Window = Fluent:CreateWindow({
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     General = Window:AddTab({ Title = "General Tab", Icon = "home" }),
-    Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+    Main = Window:AddTab({ Title = "General Tab", Icon = "home" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
@@ -31,7 +31,7 @@ do
 
     local Slider = Tabs.Main:AddSlider("Slider", {
         Title = "Walk Speed",
-        Description = "You can move the slider To increase speed and can reduce speed.",
+        Description = "You can speed up and slow down.",
         Default = 36,
         Min = 36,
         Max = 200,
@@ -51,7 +51,7 @@ do
 
     local Slider = Tabs.Main:AddSlider("Slider", {
         Title = "FOV",
-        Description = "You can move the slider to increase Fov and decrease Fov.",
+        Description = "You can increase FOV and decrease FOV.",
         Default = 70,
         Min = 70,
         Max = 360,
@@ -69,6 +69,33 @@ do
 
 
 
+    Tabs.Main:AddButton({
+        Title = "Button",
+        Description = "Very important button",
+        Callback = function()
+            Window:Dialog({
+                Title = "Title",
+                Content = "This is a dialog",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            print("Confirmed the dialog.")
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+
+    
     local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
         Title = "Dropdown",
         Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
