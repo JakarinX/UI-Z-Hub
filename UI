@@ -15,8 +15,8 @@ local Window = Fluent:CreateWindow({
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
-    General = Window:AddTab({ Title = "General", Icon = "home" })
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
+    General = Window:AddTab({ Title = "General", Icon = "home" }),
 }
 
 local Options = Fluent.Options
@@ -31,13 +31,10 @@ do
 
 
 
-    local Toggle = Tabs.General:AddToggle("MyGeneral", {Title = "General", Default = false })
-
-    Toggle:OnChanged(function()
-        print("ESP:", Options.MyToggle.Value)
-    end)
-
-    Options.MyToggle:SetValue(false)
+    Tabs.General:AddParagraph({
+        Title = "jakarin",
+        Content = "Hello"
+    })
 
 
 
