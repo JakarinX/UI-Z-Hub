@@ -42,33 +42,44 @@ do
 
 -- General
 local Light = game:GetService("Lighting")
-local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
 
-local function dofullbright(enabled)
+local originalAmbient = Light.Ambient
+local originalColorShiftBottom = Light.ColorShift_Bottom
+local originalColorShiftTop = Light.ColorShift_Top
+
+local function dofullbright()
+    Light.Ambient = Color3.new(1, 1, 1)
+    Light.ColorShift_Bottom = Color3.new(1, 1, 1)
+    Light.ColorShift_Top = Color3.new(1, 1, 1)
+end
+
+local function restoreOriginalLighting()
+    Light.Ambient = originalAmbient
+    Light.ColorShift_Bottom = originalColorShiftBottom
+    Light.ColorShift_Top = originalColorShiftTop
+end
+
+local function toggleFullbright(enabled)
     if enabled then
-        Light.Ambient = Color3.new(1, 1, 1)
-        Light.ColorShift_Bottom = Color3.new(1, 1, 1)
-        Light.ColorShift_Top = Color3.new(1, 1, 1)
+        dofullbright()
     else
-        -- Reset lighting to default
-        Light.Ambient = Color3.fromRGB(127, 127, 127) -- Example default color
-        Light.ColorShift_Bottom = Color3.fromRGB(127, 127, 127) -- Example default color
-        Light.ColorShift_Top = Color3.fromRGB(127, 127, 127) -- Example default color
+        restoreOriginalLighting()
     end
 end
 
--- Initial call to set lighting based on default toggle state
-dofullbright(Toggle.Enabled)
+local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
 
--- Connect the toggle to the fullbright function
 Toggle:OnChanged(function(enabled)
-    dofullbright(enabled)
+    toggleFullbright(enabled)
     print("Fullbright toggled:", enabled)
 end)
 
+-- Initial call to set lighting based on default toggle state
+toggleFullbright(Toggle.Enabled)
+
 -- Reapply fullbright when lighting changes
 Light.LightingChanged:Connect(function()
-    dofullbright(Toggle.Enabled)
+    toggleFullbright(Toggle.Enabled)
 end)
 
 
