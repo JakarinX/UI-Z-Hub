@@ -31,6 +31,16 @@ do
 
 
 
+    local Toggle = Tabs.General:AddToggle("MyGeneral", {Title = "General", Default = false })
+
+    Toggle:OnChanged(function()
+        print("ESP:", Options.MyToggle.Value)
+    end)
+
+    Options.MyToggle:SetValue(false)
+
+
+
     Tabs.Main:AddParagraph({
         Title = "Paragraph",
         Content = "This is a paragraph.\nSecond line!"
