@@ -14,6 +14,7 @@ local Window = Fluent:CreateWindow({
 
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
+    General = Window:AddTab({ Title = "General", Icon = "home"})
     Main = Window:AddTab({ Title = "Main", Icon = "" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
@@ -27,6 +28,14 @@ do
         SubContent = "SubContent", -- Optional
         Duration = 5 -- Set to nil to make the notification not disappear
     })
+
+
+
+    local Toggle = Tabs.General:AddToggle("MyToggleEE", {Title = "ToggleEE", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:", Options.MyToggle.Value)
+    end)
 
 
 
