@@ -3,7 +3,7 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "The Mimic - Kirby hub " .. Fluent.Version,
+    Title = "The Mimic - Kirby hub ",
     SubTitle = "version 1.0",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
@@ -15,6 +15,8 @@ local Window = Fluent:CreateWindow({
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Jealousy = Window:AddTab({ Title = "Jealousy", Icon = ""})
+    Jealousy1 = Window:AddTab({ Title = "• Chapter 1", Icon = ""})
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
