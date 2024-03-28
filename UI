@@ -31,7 +31,7 @@ do
 
 
 
-    local Toggle = Tabs.General:AddToggle("MyToggleEE", {Title = "ToggleEE", Default = false })
+    local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
 
     Toggle:OnChanged(function()
         print("Toggle changed:", Options.MyToggle.Value)
