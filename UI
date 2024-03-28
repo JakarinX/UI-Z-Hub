@@ -41,11 +41,50 @@ do
 
 
 -- General
+local Light = game:GetService("Lighting")
+
+local function doFullbright(enabled)
+    if enabled then
+        Light.Ambient = Color3.new(1, 1, 1)
+        Light.ColorShift_Bottom = Color3.new(1, 1, 1)
+        Light.ColorShift_Top = Color3.new(1, 1, 1)
+    else
+        -- Restore default lighting values here if needed
+        -- For simplicity, let's assume we want to turn off fullbright effect
+        Light.Ambient = Color3.new(0.5, 0.5, 0.5)  -- Default Ambient
+        Light.ColorShift_Bottom = Color3.new(0, 0, 0)  -- Default ColorShift_Bottom
+        Light.ColorShift_Top = Color3.new(1, 1, 1)  -- Default ColorShift_Top
+    end
+end
+
+local function applyFullbright()
+    local toggleEnabled = false
+
+    local function onToggleChanged(enabled)
+        toggleEnabled = enabled
+        doFullbright(enabled)
+    end
+
     local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
 
-    Toggle:OnChanged(function()
-        print("Fullbright")
-    end)
+    Toggle:OnChanged(onToggleChanged)
+
+    doFullbright(false) -- Ensure fullbright starts disabled initially
+
+    -- Cleanup function to remove toggle when it's not needed
+    local function cleanup()
+        Toggle:Destroy()
+    end
+
+    return cleanup
+end
+
+local cleanupFullbrightToggle = applyFullbright()
+
+-- Disconnect the event handler for fullbright when the script is closed
+game:BindToClose(function()
+    cleanupFullbrightToggle()
+end)
 
 
 -- General
@@ -59,11 +98,11 @@ do
 --Chapter
     Tabs.Chapter1:AddButton({
         Title = "Auto win",
-        Description = "Very important button",
+        Description = "Auto win Chapter 1 (Step 1)",
         Callback = function()
             Window:Dialog({
-                Title = "Title",
-                Content = "This is a dialog",
+                Title = "Auto win",
+                Content = "Are you sure you want to Auto win Chapter 1 (Step 1)?",
                 Buttons = {
                     {
                         Title = "Confirm",
