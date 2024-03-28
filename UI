@@ -16,6 +16,7 @@ local Window = Fluent:CreateWindow({
 local Tabs = {
     Main = Window:AddTab({ Title = "Home", Icon = "home" }),
     General = Window:AddTab({ Title = "General", Icon = "home" }),
+    ESPPlayer = Window:AddTab({ Title = "ESP Player", Icon = "eye" }),
     Chapter = Window:AddTab({ Title = "Chapter", Icon = "archive" }),
     Chapter1 = Window:AddTab({ Title = "     • Chapter 1", Icon = "" }),
     Chapter2 = Window:AddTab({ Title = "     • Chapter 2", Icon = "" }),
@@ -47,6 +48,43 @@ do
     end)
 
     Options.MyToggle:SetValue(false)
+
+
+-- General
+    local Toggle = Tabs.ESPPlayer:AddToggle("MyESP", {Title = "ESP", Default = false })
+
+    Toggle:OnChanged(function()
+        print("ESP:", Options.MyToggle.Value)
+    end)
+
+    Options.MyToggle:SetValue(false)
+
+
+--Chapter
+    Tabs.Chapter:AddButton({
+        Title = "Auto win",
+        Description = "Very important button",
+        Callback = function()
+            Window:Dialog({
+                Title = "Title",
+                Content = "This is a dialog",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            print("Confirmed the dialog.")
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
+        end
+    })
 
 
 
