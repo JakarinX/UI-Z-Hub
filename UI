@@ -92,7 +92,7 @@ end)
 
 
 --Chapter1
-    local section = tab.Chapter1:AddSection("Step 1")
+    local section = tab:AddSection("Step 1")
 
     Tabs.section:AddButton({
         Title = "Auto win",
