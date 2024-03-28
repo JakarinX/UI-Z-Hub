@@ -1,29 +1,16 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
-
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub " .. Fluent.Version,
-    SubTitle = "by Jakarin",
+    SubTitle = "version 1.0",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
-    Theme = "Dark",
+    Theme = "Rose",
     MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
 })
 
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "" }),
-    Control = Window:AddTab({ Title = "Control", Icon = "folder" })
-    Chapter1 = Window:AddTab({ Title = "• Chapter 1", Icon = "" })
-    Chapter2 = Window:AddTab({ Title = "• Chapter 2", Icon = "" })
-    Chapter3 = Window:AddTab({ Title = "• Chapter 3", Icon = "" })
-    Chapter4 = Window:AddTab({ Title = "• Chapter 4", Icon = "" })
-    Jealousy = Window:AddTab({ Title = "Jealousy", Icon = "folder" })
-    Jealousy1 = Window:AddTab({ Title = "• Chapter 1", Icon = "" })
-    Jealousy2 = Window:AddTab({ Title = "• Chapter 2", Icon = "" })
-    Jealousy3 = Window:AddTab({ Title = "• Chapter 3", Icon = "" })
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
