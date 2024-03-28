@@ -47,8 +47,6 @@ do
         print("Fullbright")
     end)
 
-    Options.MyToggle:SetValue(false)
-
 
 -- General
     local Toggle = Tabs.ESPPlayer:AddToggle("MyESP", {Title = "ESP", Default = false })
@@ -56,8 +54,6 @@ do
     Toggle:OnChanged(function()
         print("ESP")
     end)
-
-    Options.MyToggle:SetValue(false)
 
 
 --Chapter
