@@ -402,7 +402,7 @@ SaveManager:SetIgnoreIndexes({})
 InterfaceManager:SetFolder("FluentScriptHub")
 SaveManager:SetFolder("FluentScriptHub/specific-game")
 
-Chapter1:BuildStep1(Tabs.Chapter1)
+InterfaceManager:BuildStep1(Tabs.Chapter1)
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
