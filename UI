@@ -31,14 +31,6 @@ do
 
 
 
-    local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
-
-    Toggle:OnChanged(function()
-        print("Toggle changed:", Options.MyToggle.Value)
-    end)
-
-
-
     Tabs.Main:AddParagraph({
         Title = "Paragraph",
         Content = "This is a paragraph.\nSecond line!"
