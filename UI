@@ -92,9 +92,9 @@ end)
 
 
 --Chapter1
-    local section = Chapter1:AddSection("Step 1")
+    local section = tab.Chapter1:AddSection("Step 1")
 
-    Tabs.Chapter1:AddButton({
+    Tabs.section:AddButton({
         Title = "Auto win",
         Description = "Auto win Chapter 1 (Step 1)",
         Callback = function()
@@ -121,7 +121,7 @@ end)
 
 
 
-    local Toggle = Tabs.Chapter1:AddToggle("MyESPGhostStep 1", {Title = "ESP Ghost", Default = false })
+    local Toggle = Tabs.section:AddToggle("MyESPGhostStep 1", {Title = "ESP Ghost", Default = false })
 
     Toggle:OnChanged(function()
         print("ESP Ghost")
@@ -129,7 +129,7 @@ end)
 
 
 
-    local Toggle = Tabs.Chapter1:AddToggle("MyESPKeyStep 1", {Title = "ESP Key", Default = false })
+    local Toggle = Tabs.section:AddToggle("MyESPKeyStep 1", {Title = "ESP Key", Default = false })
 
     Toggle:OnChanged(function()
         print("ESP Key")
@@ -137,64 +137,12 @@ end)
 
 
 
-    local Toggle = Tabs.Chapter1:AddToggle("MyESPDoorStep 1", {Title = "ESP Door", Default = false })
+    local Toggle = Tabs.section:AddToggle("MyESPDoorStep 1", {Title = "ESP Door", Default = false })
 
     Toggle:OnChanged(function()
         print("ESP Door")
     end)
 
-
-
-    local section = Chapter1:AddSection("Step 2")
-
-    Tabs.Chapter1:AddButton({
-        Title = "Auto win",
-        Description = "Auto win Chapter 1 (Step 1)",
-        Callback = function()
-            Window:Dialog({
-                Title = "Auto win",
-                Content = "Are you sure you want to Auto win Chapter 1 (Step 1)?",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            print("Confirmed the dialog.")
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
-                }
-            })
-        end
-    })
-
-
-
-    local Toggle = Tabs.Chapter1:AddToggle("MyESPGhostStep 1", {Title = "ESP Ghost", Default = false })
-
-    Toggle:OnChanged(function()
-        print("ESP Ghost")
-    end)
-
-
-
-    local Toggle = Tabs.Chapter1:AddToggle("MyESPKeyStep 1", {Title = "ESP Key", Default = false })
-
-    Toggle:OnChanged(function()
-        print("ESP Key")
-    end)
-
-
-
-    local Toggle = Tabs.Chapter1:AddToggle("MyESPDoorStep 1", {Title = "ESP Door", Default = false })
-
-    Toggle:OnChanged(function()
-        print("ESP Door")
-    end)
 
 
     Tabs.Main:AddParagraph({
