@@ -41,41 +41,37 @@ do
 
 
 -- General
-local Light = game:GetService("Lighting")
-local fullbrightEnabled = true
+-- Check if the game and the lighting service are available
+local game = game
+local Lighting = game:GetService("Lighting")
 
-function dofullbright()
-    if fullbrightEnabled then
-        Light.Ambient = Color3.new(1, 1, 1)
-        Light.ColorShift_Bottom = Color3.new(1, 1, 1)
-        Light.ColorShift_Top = Color3.new(1, 1, 1)
+if not Lighting then
+    error("Lighting service not found. This script requires Lighting service to function.")
+    return
+end
+
+local function toggleFullbright(enabled)
+    if enabled then
+        Lighting.Ambient = Color3.new(1, 1, 1)
+        Lighting.ColorShift_Bottom = Color3.new(1, 1, 1)
+        Lighting.ColorShift_Top = Color3.new(1, 1, 1)
     else
-        -- Restore original lighting
-        Light.Ambient = Color3.fromRGB(127, 127, 127) -- Example default color
-        Light.ColorShift_Bottom = Color3.fromRGB(127, 127, 127) -- Example default color
-        Light.ColorShift_Top = Color3.fromRGB(127, 127, 127) -- Example default color
+        -- Reset lighting properties to default when disabled
+        Lighting.Ambient = Color3.new(0.5, 0.5, 0.5) -- Default ambient color
+        Lighting.ColorShift_Bottom = Color3.new(0, 0, 0) -- Default color shift bottom
+        Lighting.ColorShift_Top = Color3.new(1, 1, 1) -- Default color shift top
     end
 end
 
--- Connect the function to LightingChanged event
-Light.LightingChanged:Connect(dofullbright)
-
--- Toggle function
-local function toggleFullbright(enabled)
-    fullbrightEnabled = enabled
-    dofullbright() -- Call to ensure immediate effect
-end
-
--- Call the toggle function initially to set the correct lighting
-toggleFullbright(true)
-
--- Assuming you have a function to add toggle
 local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = true })
 
-Toggle:OnChanged(function(enabled)
-    toggleFullbright(enabled)
+Toggle:Connect(function(enabled)
     print("Fullbright toggled:", enabled)
+    toggleFullbright(enabled)
 end)
+
+-- Initial setup
+toggleFullbright(Toggle:Get())
 
 
 -- General
