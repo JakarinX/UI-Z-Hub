@@ -81,8 +81,8 @@ end
 
 local cleanupFullbrightToggle = applyFullbright()
 
--- Disconnect the event handler for fullbright when the script is closed
-game:BindToClose(function()
+game.Players.PlayerRemoving:Connect(function(player)
+    -- Cleanup toggle when player leaves the game
     cleanupFullbrightToggle()
 end)
 
