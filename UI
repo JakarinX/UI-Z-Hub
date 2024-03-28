@@ -3,8 +3,8 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "Z Hub - " .. Fluent.Version,
-    SubTitle = "By Z Hub",
+    Title = "Kirby hub " .. Fluent.Version,
+    SubTitle = "by Jakarin",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
@@ -14,56 +14,75 @@ local Window = Fluent:CreateWindow({
 
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
-    General = Window:AddTab({ Title = "General Tab", Icon = "home" }),
-    Main = Window:AddTab({ Title = "     • Main", Icon = "" }),
-    Combat = Window:AddTab({ Title = "Combat", Icon = "sword" }),
-    AutoParryV1 = Window:AddTab({ Title = "     • Auto ParryV1", Icon = "" }),
-    ESP = Window:AddTab({ Title = "ESP", Icon = "user" }),
-    ESPSettings = Window:AddTab({ Title = "     • ESP Settings", Icon = "" }),
-    ESPBox = Window:AddTab({ Title = "     • ESP Box", Icon = "" }),
-    ESPHealthBar = Window:AddTab({ Title = "     • ESP Health Bar", Icon = "" }),
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
 local Options = Fluent.Options
 
 do
-    Tabs.Main:AddParagraph({
-        Title = "lnformation",
-        Content = "Username Changer is a fake name, but others can still see your real name. But the reporting system may think that Username Changer is your real name."
+    Fluent:Notify({
+        Title = "Notification",
+        Content = "This is a notification",
+        SubContent = "SubContent", -- Optional
+        Duration = 5 -- Set to nil to make the notification not disappear
     })
 
 
 
-    local Slider = Tabs.Main:AddSlider("Slider", {
-        Title = "Walk Speed",
-        Description = "You can speed up and slow down.",
-        Default = 36,
-        Min = 36,
-        Max = 200,
-        Rounding = 1,
-        Callback = function(Value)
-            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+    Tabs.Main:AddParagraph({
+        Title = "Paragraph",
+        Content = "This is a paragraph.\nSecond line!"
+    })
+
+
+
+    Tabs.Main:AddButton({
+        Title = "Button",
+        Description = "Very important button",
+        Callback = function()
+            Window:Dialog({
+                Title = "Title",
+                Content = "This is a dialog",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            print("Confirmed the dialog.")
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
         end
     })
 
-    Slider:OnChanged(function(Value)
-        print("Slider changed:", Value)
+
+
+    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:", Options.MyToggle.Value)
     end)
 
-    Slider:SetValue(3)
+    Options.MyToggle:SetValue(false)
 
 
-
+    
     local Slider = Tabs.Main:AddSlider("Slider", {
-        Title = "FOV",
-        Description = "You can increase FOV and decrease FOV.",
-        Default = 70,
-        Min = 70,
-        Max = 360,
+        Title = "Slider",
+        Description = "This is a slider",
+        Default = 2,
+        Min = 0,
+        Max = 5,
         Rounding = 1,
         Callback = function(Value)
-            game.Workspace.Camera.FieldOfView = Value
+            print("Slider was changed:", Value)
         end
     })
 
@@ -231,7 +250,7 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 Window:SelectTab(1)
 
 Fluent:Notify({
-    Title = "Z Hub",
+    Title = "Fluent",
     Content = "The script has been loaded.",
     Duration = 8
 })
