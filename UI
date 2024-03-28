@@ -39,6 +39,16 @@ do
     })
 
 
+-- General
+    local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Fullbright:", Options.MyToggle.Value)
+    end)
+
+    Options.MyToggle:SetValue(false)
+
+
 
     Tabs.Main:AddParagraph({
         Title = "Paragraph",
