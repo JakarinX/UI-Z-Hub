@@ -92,9 +92,9 @@ end)
 
 
 --Chapter1
-    local section = tab:AddSection("Step 1")
+    local section = Chapter1:AddSection("Step 1")
 
-    Tabs.section:AddButton({
+    Tabs.Chapter1:AddButton({
         Title = "Auto win",
         Description = "Auto win Chapter 1 (Step 1)",
         Callback = function()
@@ -121,7 +121,7 @@ end)
 
 
 
-    local Toggle = Tabs.section:AddToggle("MyESPGhostStep 1", {Title = "ESP Ghost", Default = false })
+    local Toggle = Tabs.Chapter1:AddToggle("MyESPGhostStep 1", {Title = "ESP Ghost", Default = false })
 
     Toggle:OnChanged(function()
         print("ESP Ghost")
@@ -129,7 +129,7 @@ end)
 
 
 
-    local Toggle = Tabs.section:AddToggle("MyESPKeyStep 1", {Title = "ESP Key", Default = false })
+    local Toggle = Tabs.Chapter1:AddToggle("MyESPKeyStep 1", {Title = "ESP Key", Default = false })
 
     Toggle:OnChanged(function()
         print("ESP Key")
@@ -137,7 +137,7 @@ end)
 
 
 
-    local Toggle = Tabs.section:AddToggle("MyESPDoorStep 1", {Title = "ESP Door", Default = false })
+    local Toggle = Tabs.Chapter1:AddToggle("MyESPDoorStep 1", {Title = "ESP Door", Default = false })
 
     Toggle:OnChanged(function()
         print("ESP Door")
