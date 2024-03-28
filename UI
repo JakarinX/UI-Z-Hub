@@ -44,7 +44,7 @@ do
     local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
 
     Toggle:OnChanged(function()
-        print("Fullbright:", Options.MyToggle.Value)
+        print("Fullbright")
     end)
 
     Options.MyToggle:SetValue(false)
@@ -54,14 +54,14 @@ do
     local Toggle = Tabs.ESPPlayer:AddToggle("MyESP", {Title = "ESP", Default = false })
 
     Toggle:OnChanged(function()
-        print("ESP:", Options.MyToggle.Value)
+        print("ESP")
     end)
 
     Options.MyToggle:SetValue(false)
 
 
 --Chapter
-    Tabs.Chapter:AddButton({
+    Tabs.Chapter1:AddButton({
         Title = "Auto win",
         Description = "Very important button",
         Callback = function()
