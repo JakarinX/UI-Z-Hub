@@ -42,44 +42,39 @@ do
 
 -- General
 local Light = game:GetService("Lighting")
+local fullbrightEnabled = true
 
-local originalAmbient = Light.Ambient
-local originalColorShiftBottom = Light.ColorShift_Bottom
-local originalColorShiftTop = Light.ColorShift_Top
-
-local function dofullbright()
-    Light.Ambient = Color3.new(1, 1, 1)
-    Light.ColorShift_Bottom = Color3.new(1, 1, 1)
-    Light.ColorShift_Top = Color3.new(1, 1, 1)
-end
-
-local function restoreOriginalLighting()
-    Light.Ambient = originalAmbient
-    Light.ColorShift_Bottom = originalColorShiftBottom
-    Light.ColorShift_Top = originalColorShiftTop
-end
-
-local function toggleFullbright(enabled)
-    if enabled then
-        dofullbright()
+function dofullbright()
+    if fullbrightEnabled then
+        Light.Ambient = Color3.new(1, 1, 1)
+        Light.ColorShift_Bottom = Color3.new(1, 1, 1)
+        Light.ColorShift_Top = Color3.new(1, 1, 1)
     else
-        restoreOriginalLighting()
+        -- Restore original lighting
+        Light.Ambient = Color3.fromRGB(127, 127, 127) -- Example default color
+        Light.ColorShift_Bottom = Color3.fromRGB(127, 127, 127) -- Example default color
+        Light.ColorShift_Top = Color3.fromRGB(127, 127, 127) -- Example default color
     end
 end
 
-local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
+-- Connect the function to LightingChanged event
+Light.LightingChanged:Connect(dofullbright)
+
+-- Toggle function
+local function toggleFullbright(enabled)
+    fullbrightEnabled = enabled
+    dofullbright() -- Call to ensure immediate effect
+end
+
+-- Call the toggle function initially to set the correct lighting
+toggleFullbright(true)
+
+-- Assuming you have a function to add toggle
+local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = true })
 
 Toggle:OnChanged(function(enabled)
     toggleFullbright(enabled)
     print("Fullbright toggled:", enabled)
-end)
-
--- Initial call to set lighting based on default toggle state
-toggleFullbright(Toggle.Enabled)
-
--- Reapply fullbright when lighting changes
-Light.LightingChanged:Connect(function()
-    toggleFullbright(Toggle.Enabled)
 end)
 
 
