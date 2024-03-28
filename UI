@@ -16,10 +16,15 @@ local Window = Fluent:CreateWindow({
 local Tabs = {
     Main = Window:AddTab({ Title = "Home", Icon = "home" }),
     General = Window:AddTab({ Title = "General", Icon = "home" }),
-    Jealousy = Window:AddTab({ Title = "Jealousy", Icon = "" }),
-    Jealousy1 = Window:AddTab({ Title = "• Chapter 1", Icon = "" }),
-    Jealousy2 = Window:AddTab({ Title = "• Chapter 2", Icon = "" }),
-    Jealousy3 = Window:AddTab({ Title = "• Chapter 3", Icon = "" }),
+    Chapter = Window:AddTab({ Title = "Chapter", Icon = "archive" }),
+    Chapter1 = Window:AddTab({ Title = "     • Chapter 1", Icon = "" }),
+    Chapter2 = Window:AddTab({ Title = "     • Chapter 2", Icon = "" }),
+    Chapter3 = Window:AddTab({ Title = "     • Chapter 3", Icon = "" }),
+    Chapter4 = Window:AddTab({ Title = "     • Chapter 4", Icon = "" }),
+    Jealousy = Window:AddTab({ Title = "Jealousy", Icon = "archive" }),
+    Jealousy1 = Window:AddTab({ Title = "     • Chapter 1", Icon = "" }),
+    Jealousy2 = Window:AddTab({ Title = "     • Chapter 2", Icon = "" }),
+    Jealousy3 = Window:AddTab({ Title = "     • Chapter 3", Icon = "" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
@@ -71,6 +76,41 @@ do
 
 
     Tabs.Jealousy3:AddParagraph({
+        Title = "Paragraph",
+        Content = "This is a paragraph.\nSecond line!"
+    })
+
+
+
+    Tabs.Chapter:AddParagraph({
+        Title = "Paragraph",
+        Content = "This is a paragraph.\nSecond line!"
+    })
+
+
+
+    Tabs.Chapter1:AddParagraph({
+        Title = "Paragraph",
+        Content = "This is a paragraph.\nSecond line!"
+    })
+
+
+
+    Tabs.Chapter2:AddParagraph({
+        Title = "Paragraph",
+        Content = "This is a paragraph.\nSecond line!"
+    })
+
+
+
+    Tabs.Chapter3:AddParagraph({
+        Title = "Paragraph",
+        Content = "This is a paragraph.\nSecond line!"
+    })
+
+
+
+    Tabs.Chapter4:AddParagraph({
         Title = "Paragraph",
         Content = "This is a paragraph.\nSecond line!"
     })
