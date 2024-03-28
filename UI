@@ -41,37 +41,46 @@ do
 
 
 -- General
--- Check if the game and the lighting service are available
-local game = game
-local Lighting = game:GetService("Lighting")
+local Light = game:GetService("Lighting")
 
-if not Lighting then
-    error("Lighting service not found. This script requires Lighting service to function.")
-    return
+local originalAmbient = Light.Ambient
+local originalColorShiftBottom = Light.ColorShift_Bottom
+local originalColorShiftTop = Light.ColorShift_Top
+
+local function dofullbright()
+    Light.Ambient = Color3.new(1, 1, 1)
+    Light.ColorShift_Bottom = Color3.new(1, 1, 1)
+    Light.ColorShift_Top = Color3.new(1, 1, 1)
+end
+
+local function restoreOriginalLighting()
+    Light.Ambient = originalAmbient
+    Light.ColorShift_Bottom = originalColorShiftBottom
+    Light.ColorShift_Top = originalColorShiftTop
 end
 
 local function toggleFullbright(enabled)
     if enabled then
-        Lighting.Ambient = Color3.new(1, 1, 1)
-        Lighting.ColorShift_Bottom = Color3.new(1, 1, 1)
-        Lighting.ColorShift_Top = Color3.new(1, 1, 1)
+        dofullbright()
     else
-        -- Reset lighting properties to default when disabled
-        Lighting.Ambient = Color3.new(0.5, 0.5, 0.5) -- Default ambient color
-        Lighting.ColorShift_Bottom = Color3.new(0, 0, 0) -- Default color shift bottom
-        Lighting.ColorShift_Top = Color3.new(1, 1, 1) -- Default color shift top
+        restoreOriginalLighting()
     end
 end
 
-local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = true })
+local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
 
-Toggle:Connect(function(enabled)
-    print("Fullbright toggled:", enabled)
+Toggle:OnChanged(function(enabled)
     toggleFullbright(enabled)
+    print("Fullbright toggled:", enabled)
 end)
 
--- Initial setup
-toggleFullbright(Toggle:Get())
+-- Initial call to set lighting based on default toggle state
+toggleFullbright(Toggle.Enabled)
+
+-- Reapply fullbright when lighting changes
+Light.LightingChanged:Connect(function()
+    toggleFullbright(Toggle.Enabled)
+end)
 
 
 -- General
