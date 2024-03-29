@@ -39,16 +39,54 @@ do
         print("Toggle changed:")
     end)
 
-
     --Noclip
     local Toggle = Tabs.General:AddToggle("MyNoclip", {Title = "Noclip", Default = false })
+
+    Toggle:OnChanged(function(isEnabled)
+        if isEnabled then
+            noclip() -- Enable noclip
+        else
+            clip()   -- Disable noclip
+        end
+    end)
+
+    local Noclip = nil
+    local Clip = nil
+    
+    function noclip()
+        Clip = false
+        local function Nocl()
+            if Clip == false and game.Players.LocalPlayer.Character ~= nil then
+                for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
+                        v.CanCollide = false
+                    end
+                end
+            end
+            wait(0.21) -- basic optimization
+        end
+        Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
+    end
+    
+    function clip()
+        if Noclip then
+            Noclip:Disconnect()
+            Noclip = nil  -- Set Noclip to nil to indicate it's turned off
+        end
+        Clip = true
+    end
+    
+    noclip() -- Initially enable noclip    
+
+    --Fly
+    local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
 
     Toggle:OnChanged(function()
         print("Toggle changed:")
     end)
 
-    --Fly
-    local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
+    -- Refresh
+    local Toggle = Tabs.General:AddToggle("MyRefresh", {Title = "Refresh", Default = false })
 
     Toggle:OnChanged(function()
         print("Toggle changed:")
@@ -60,11 +98,11 @@ do
     -- Reset
     Tabs.General:AddButton({
         Title = "Reset",
-        Description = "Very important button",
+        Description = "This button will reset your settings to their original state.",
         Callback = function()
             Window:Dialog({
-                Title = "Title",
-                Content = "This is a dialog",
+                Title = "Reset",
+                Content = "Are you sure you want to reset the settings?",
                 Buttons = {
                     {
                         Title = "Confirm",
@@ -83,7 +121,7 @@ do
         end
     })
 
-    -- field of view
+    -- player speed
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "player speed",
         Description = "This is a slider",
@@ -102,7 +140,7 @@ do
 
     Slider:SetValue(3)
 
-    -- field of view
+    -- jump power
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "jump power",
         Description = "This is a slider",
@@ -121,9 +159,9 @@ do
 
     Slider:SetValue(3)
 
-    -- field of view
+    -- filght speed
     local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "flight speed",
+        Title = "filght speed",
         Description = "This is a slider",
         Default = 2,
         Min = 0,
