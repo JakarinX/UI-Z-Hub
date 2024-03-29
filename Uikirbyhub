@@ -200,7 +200,12 @@ do
     function clip()
         if Noclip then
             Noclip:Disconnect()
-            Noclip = nil  -- Set Noclip to nil to indicate it's turned off
+            Noclip = nil
+            for _, v in ipairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA('BasePart') and v.CanCollide then
+                    v.CanCollide = true
+                end
+            end
         end
         Clip = true
     end
@@ -281,7 +286,7 @@ do
 
     -- player speed
     local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "Player speed",
+        Title = "player speed",
         Description = "This is a slider",
         Default = 2,
         Min = 0,
