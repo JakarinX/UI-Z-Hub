@@ -33,54 +33,114 @@ do
     -- Player Actions
     local section = Tabs.General:AddSection("Player Actions")
 
-    local FullBrightEnabled = false
-
     -- Function to enable full bright effect
     local function EnableFullBright()
+        _G.FullBrightEnabled = true
         game:GetService("Lighting").Brightness = 1
         game:GetService("Lighting").ClockTime = 12
         game:GetService("Lighting").FogEnd = 786543
         game:GetService("Lighting").GlobalShadows = false
         game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
     end
-    
+
     -- Function to disable full bright effect
     local function DisableFullBright()
-        local normalSettings = _G.NormalLightingSettings
-        game:GetService("Lighting").Brightness = normalSettings.Brightness
-        game:GetService("Lighting").ClockTime = normalSettings.ClockTime
-        game:GetService("Lighting").FogEnd = normalSettings.FogEnd
-        game:GetService("Lighting").GlobalShadows = normalSettings.GlobalShadows
-        game:GetService("Lighting").Ambient = normalSettings.Ambient
+        _G.FullBrightEnabled = false
+        if _G.NormalLightingSettings then
+            local normalSettings = _G.NormalLightingSettings
+            game:GetService("Lighting").Brightness = normalSettings.Brightness
+            game:GetService("Lighting").ClockTime = normalSettings.ClockTime
+            game:GetService("Lighting").FogEnd = normalSettings.FogEnd
+            game:GetService("Lighting").GlobalShadows = normalSettings.GlobalShadows
+            game:GetService("Lighting").Ambient = normalSettings.Ambient
+        end
     end
-    
+
     -- Add the toggle
     local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
-    
+
     -- Event handler for toggle change
     Toggle:OnChanged(function(isEnabled)
         if isEnabled then
             EnableFullBright()
-            FullBrightEnabled = true
         else
             DisableFullBright()
-            FullBrightEnabled = false
         end
     end)
-    
-    -- Initialization
-    _G.NormalLightingSettings = {
-        Brightness = game:GetService("Lighting").Brightness,
-        ClockTime = game:GetService("Lighting").ClockTime,
-        FogEnd = game:GetService("Lighting").FogEnd,
-        GlobalShadows = game:GetService("Lighting").GlobalShadows,
-        Ambient = game:GetService("Lighting").Ambient
-    }
-    
-    -- If FullBright is already enabled, enable it
-    if FullBrightEnabled then
-        EnableFullBright()
-    end    
+
+    if not _G.FullBrightExecuted then
+        _G.FullBrightEnabled = false
+
+        _G.NormalLightingSettings = {
+            Brightness = game:GetService("Lighting").Brightness,
+            ClockTime = game:GetService("Lighting").ClockTime,
+            FogEnd = game:GetService("Lighting").FogEnd,
+            GlobalShadows = game:GetService("Lighting").GlobalShadows,
+            Ambient = game:GetService("Lighting").Ambient
+        }
+
+        game:GetService("Lighting"):GetPropertyChangedSignal("Brightness"):Connect(function()
+            if game:GetService("Lighting").Brightness ~= 1 and game:GetService("Lighting").Brightness ~= _G.NormalLightingSettings.Brightness then
+                _G.NormalLightingSettings.Brightness = game:GetService("Lighting").Brightness
+                if not _G.FullBrightEnabled then
+                    repeat
+                        wait()
+                    until _G.FullBrightEnabled
+                end
+                game:GetService("Lighting").Brightness = 1
+            end
+        end)
+
+        game:GetService("Lighting"):GetPropertyChangedSignal("ClockTime"):Connect(function()
+            if game:GetService("Lighting").ClockTime ~= 12 and game:GetService("Lighting").ClockTime ~= _G.NormalLightingSettings.ClockTime then
+                _G.NormalLightingSettings.ClockTime = game:GetService("Lighting").ClockTime
+                if not _G.FullBrightEnabled then
+                    repeat
+                        wait()
+                    until _G.FullBrightEnabled
+                end
+                game:GetService("Lighting").ClockTime = 12
+            end
+        end)
+
+        game:GetService("Lighting"):GetPropertyChangedSignal("FogEnd"):Connect(function()
+            if game:GetService("Lighting").FogEnd ~= 786543 and game:GetService("Lighting").FogEnd ~= _G.NormalLightingSettings.FogEnd then
+                _G.NormalLightingSettings.FogEnd = game:GetService("Lighting").FogEnd
+                if not _G.FullBrightEnabled then
+                    repeat
+                        wait()
+                    until _G.FullBrightEnabled
+                end
+                game:GetService("Lighting").FogEnd = 786543
+            end
+        end)
+
+        game:GetService("Lighting"):GetPropertyChangedSignal("GlobalShadows"):Connect(function()
+            if game:GetService("Lighting").GlobalShadows ~= false and game:GetService("Lighting").GlobalShadows ~= _G.NormalLightingSettings.GlobalShadows then
+                _G.NormalLightingSettings.GlobalShadows = game:GetService("Lighting").GlobalShadows
+                if not _G.FullBrightEnabled then
+                    repeat
+                        wait()
+                    until _G.FullBrightEnabled
+                end
+                game:GetService("Lighting").GlobalShadows = false
+            end
+        end)
+
+        game:GetService("Lighting"):GetPropertyChangedSignal("Ambient"):Connect(function()
+            if game:GetService("Lighting").Ambient ~= Color3.fromRGB(178, 178, 178) and game:GetService("Lighting").Ambient ~= _G.NormalLightingSettings.Ambient then
+                _G.NormalLightingSettings.Ambient = game:GetService("Lighting").Ambient
+                if not _G.FullBrightEnabled then
+                    repeat
+                        wait()
+                    until _G.FullBrightEnabled
+                end
+                game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
+            end
+        end)
+
+        _G.FullBrightExecuted = true
+    end
 
     -- Infinite Stamina
     local Toggle = Tabs.General:AddToggle("MyInfinite Stamina", {Title = "Infinite Stamina", Default = false })
