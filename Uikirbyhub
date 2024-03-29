@@ -45,12 +45,14 @@ do
     -- Function to disable full bright effect
     local function DisableFullBright()
         _G.FullBrightEnabled = false
-        local normalSettings = _G.NormalLightingSettings
-        game:GetService("Lighting").Brightness = normalSettings.Brightness
-        game:GetService("Lighting").ClockTime = normalSettings.ClockTime
-        game:GetService("Lighting").FogEnd = normalSettings.FogEnd
-        game:GetService("Lighting").GlobalShadows = normalSettings.GlobalShadows
-        game:GetService("Lighting").Ambient = normalSettings.Ambient
+        if _G.NormalLightingSettings then
+            local normalSettings = _G.NormalLightingSettings
+            game:GetService("Lighting").Brightness = normalSettings.Brightness
+            game:GetService("Lighting").ClockTime = normalSettings.ClockTime
+            game:GetService("Lighting").FogEnd = normalSettings.FogEnd
+            game:GetService("Lighting").GlobalShadows = normalSettings.GlobalShadows
+            game:GetService("Lighting").Ambient = normalSettings.Ambient
+        end
     end
 
     -- Toggle function to switch full bright effect on or off
@@ -216,7 +218,7 @@ do
     noclip() -- Initially enable noclip
 
     --Fly
-    local Toggle = Tabs.General:AddToggle("MyFly", {Title = "FlyEz", Default = false })
+    local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
 
     Toggle:OnChanged(function()
         print("Toggle changed:")
