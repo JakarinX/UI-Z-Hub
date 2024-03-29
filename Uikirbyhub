@@ -34,7 +34,7 @@ do
 
     -- Function to enable full bright effect
     local function EnableFullBright()
-        _G.FullBrightEnabled = true
+        _G.FullBrightEnabled = false
         game:GetService("Lighting").Brightness = 1
         game:GetService("Lighting").ClockTime = 12
         game:GetService("Lighting").FogEnd = 786543
@@ -281,7 +281,7 @@ do
 
     -- player speed
     local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "player speed",
+        Title = "Player speed",
         Description = "This is a slider",
         Default = 2,
         Min = 0,
