@@ -180,9 +180,9 @@ do
 
     -- Noclip
     local Noclip = nil
-    local Clip = nil
+    local Clip = false
 
-    function noclip()
+    local function noclip()
         Clip = false
         local function Nocl()
             if Clip == false and game.Players.LocalPlayer.Character ~= nil then
@@ -197,7 +197,7 @@ do
         Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
     end
 
-    function clip()
+    local function clip()
         if Noclip then
             Noclip:Disconnect()
             Noclip = nil
@@ -207,7 +207,7 @@ do
                 end
             end
         end
-        Clip = true
+        Clip = false
     end
 
     local Toggle = Tabs.General:AddToggle("MyNoclip", {Title = "Noclip", Default = false })
@@ -219,8 +219,6 @@ do
             clip()   -- Disable noclip
         end
     end)
-
-    noclip() -- Initially enable noclip
 
     --Fly
     local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
