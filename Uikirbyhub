@@ -39,20 +39,10 @@ do
         print("Toggle changed:")
     end)
 
-    --Noclip
-    local Toggle = Tabs.General:AddToggle("MyNoclip", {Title = "Noclip", Default = false })
-
-    Toggle:OnChanged(function(isEnabled)
-        if isEnabled then
-            noclip() -- Enable noclip
-        else
-            clip()   -- Disable noclip
-        end
-    end)
-
+    -- Noclip
     local Noclip = nil
     local Clip = nil
-    
+
     function noclip()
         Clip = false
         local function Nocl()
@@ -67,7 +57,7 @@ do
         end
         Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
     end
-    
+
     function clip()
         if Noclip then
             Noclip:Disconnect()
@@ -75,8 +65,18 @@ do
         end
         Clip = true
     end
-    
-    noclip() -- Initially enable noclip    
+
+    local Toggle = Tabs.General:AddToggle("MyNoclip", {Title = "Noclip", Default = false })
+
+    Toggle:OnChanged(function(isEnabled)
+        if isEnabled then
+            noclip() -- Enable noclip
+        else
+            clip()   -- Disable noclip
+        end
+    end)
+
+    noclip() -- Initially enable noclip
 
     --Fly
     local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
