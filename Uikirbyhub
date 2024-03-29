@@ -216,7 +216,7 @@ do
     noclip() -- Initially enable noclip
 
     --Fly
-    local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
+    local Toggle = Tabs.General:AddToggle("MyFly", {Title = "FlyEz", Default = false })
 
     Toggle:OnChanged(function()
         print("Toggle changed:")
