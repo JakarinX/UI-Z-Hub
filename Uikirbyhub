@@ -3,12 +3,12 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "The Mimic - Kirby hub " .. Fluent.Version,
+    Title = "The Mimic - Kirby hub ",
     SubTitle = "version 1.0",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Acrylic = true,
-    Theme = "Rose",
+    Theme = "Dark",
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 
@@ -35,7 +35,7 @@ do
 
     -- Function to enable full bright effect
     local function EnableFullBright()
-        _G.FullBrightEnabled = false
+        _G.FullBrightEnabled = true
         game:GetService("Lighting").Brightness = 1
         game:GetService("Lighting").ClockTime = 12
         game:GetService("Lighting").FogEnd = 786543
@@ -45,7 +45,7 @@ do
 
     -- Function to disable full bright effect
     local function DisableFullBright()
-        _G.FullBrightEnabled = true
+        _G.FullBrightEnabled = false
         if _G.NormalLightingSettings then
             local normalSettings = _G.NormalLightingSettings
             game:GetService("Lighting").Brightness = normalSettings.Brightness
