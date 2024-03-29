@@ -21,7 +21,7 @@ local Options = Fluent.Options
 
 do
     Fluent:Notify({
-        Title = "Notification",
+        Title = "Kirby hub",
         Content = "This is a notification",
         SubContent = "SubContent",
         Duration = 5
@@ -181,7 +181,7 @@ do
     -- Noclip
     local Noclip = nil
     local Clip = false
-
+    
     local function noclip()
         Clip = false
         local function Nocl()
@@ -196,7 +196,7 @@ do
         end
         Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
     end
-
+    
     local function clip()
         if Noclip then
             Noclip:Disconnect()
@@ -209,16 +209,16 @@ do
         end
         Clip = false
     end
-
+    
     local Toggle = Tabs.General:AddToggle("MyNoclip", {Title = "Noclip", Default = false })
-
+    
     Toggle:OnChanged(function(isEnabled)
         if isEnabled then
             noclip() -- Enable noclip
         else
             clip()   -- Disable noclip
         end
-    end)
+    end)    
 
     --Fly
     local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
