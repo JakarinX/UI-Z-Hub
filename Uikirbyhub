@@ -29,13 +29,135 @@ do
 
 
 -- General
-    local section = Tabs.General:AddSection("Player")
+    -- Player Actions
+    local section = Tabs.General:AddSection("Player Actions")
 
+    --Fullbright
     local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
 
     Toggle:OnChanged(function()
         print("Toggle changed:")
     end)
+
+
+    --Noclip
+    local Toggle = Tabs.General:AddToggle("MyNoclip", {Title = "Noclip", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    --Fly
+    local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Player Properties
+    local section = Tabs.General:AddSection("Player Properties")
+
+    -- Reset
+    Tabs.General:AddButton({
+        Title = "Reset",
+        Description = "Very important button",
+        Callback = function()
+            Window:Dialog({
+                Title = "Title",
+                Content = "This is a dialog",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            print("Confirmed the dialog.")
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    -- field of view
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "player speed",
+        Description = "This is a slider",
+        Default = 2,
+        Min = 0,
+        Max = 5,
+        Rounding = 1,
+        Callback = function(Value)
+            print("Slider was changed:", Value)
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        print("Slider changed:", Value)
+    end)
+
+    Slider:SetValue(3)
+
+    -- field of view
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "jump power",
+        Description = "This is a slider",
+        Default = 2,
+        Min = 0,
+        Max = 5,
+        Rounding = 1,
+        Callback = function(Value)
+            print("Slider was changed:", Value)
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        print("Slider changed:", Value)
+    end)
+
+    Slider:SetValue(3)
+
+    -- field of view
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "flight speed",
+        Description = "This is a slider",
+        Default = 2,
+        Min = 0,
+        Max = 5,
+        Rounding = 1,
+        Callback = function(Value)
+            print("Slider was changed:", Value)
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        print("Slider changed:", Value)
+    end)
+
+    Slider:SetValue(3)
+
+    -- field of view
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "field of view",
+        Description = "This is a slider",
+        Default = 2,
+        Min = 0,
+        Max = 5,
+        Rounding = 1,
+        Callback = function(Value)
+            print("Slider was changed:", Value)
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        print("Slider changed:", Value)
+    end)
+
+    Slider:SetValue(3)
 
 end
 
