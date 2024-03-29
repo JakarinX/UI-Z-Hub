@@ -15,15 +15,16 @@ local Window = Fluent:CreateWindow({
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     General = Window:AddTab({ Title = "General", Icon = "home" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
 }
 
 local Options = Fluent.Options
 
 do
     Fluent:Notify({
-        Title = "Notification",
+        Title = "Kirby hub",
         Content = "This is a notification",
-        SubContent = "SubContent",
+        SubContent = "The Kirby Hub script was successfully.",
         Duration = 5
     })
 
@@ -44,7 +45,7 @@ do
 
     -- Function to disable full bright effect
     local function DisableFullBright()
-        _G.FullBrightEnabled = false
+        _G.FullBrightEnabled = true
         if _G.NormalLightingSettings then
             local normalSettings = _G.NormalLightingSettings
             game:GetService("Lighting").Brightness = normalSettings.Brightness
