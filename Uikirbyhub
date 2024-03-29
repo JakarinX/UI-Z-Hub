@@ -23,7 +23,7 @@ local Options = Fluent.Options
 do
     Fluent:Notify({
         Title = "Kirby hub",
-        Content = "This is a notification",
+        Content = "",
         SubContent = "The Kirby Hub script was successfully.",
         Duration = 5
     })
