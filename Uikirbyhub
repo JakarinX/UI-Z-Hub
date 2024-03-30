@@ -2,13 +2,11 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- รีบๆหน่อยดิช้าชิปหาย
-
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
     SubTitle = "version 1.0",
     TabWidth = 160,
-    Size = UDim2.fromOffset(300, 300),
+    Size = UDim2.fromOffset(580, 460),
     Acrylic = true,
     Theme = "Dark",
     MinimizeKey = Enum.KeyCode.LeftControl
@@ -294,8 +292,8 @@ do
         Description = "This is a slider",
         Default = 70,
         Min = 70,
-        Max = 360,
-        Rounding = 10,
+        Max = 120,
+        Rounding = 1,
         Callback = function(Value)
             Camera.FieldOfView = Value
             print("Field of view set to:", Value)
@@ -303,7 +301,7 @@ do
     })
     
     -- Set initial field of view
-    Camera.FieldOfView = Slider.Default    
+    Camera.FieldOfView = Slider:Get()
 
 end
 
