@@ -2,7 +2,7 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- เผื่อวันไหนเธอจะกลับมา?
+-- รอใคร รอใคร นันสินะ
 
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
@@ -206,14 +206,22 @@ do
     local section = Tabs.General:AddSection("Player Properties")
 
     -- Reset
-    local defaultFieldOfView = 70
+    local Camera = workspace.CurrentCamera
 
+    -- Define default field of view
+    local defaultFieldOfView = 70 
+
+    -- Add Reset button
     Tabs.General:AddButton({
         Title = "Reset",
         Description = "This button will reset your settings to their original state.",
         Callback = function()
-            Camera.FieldOfView = defaultFieldOfView
-            print("Field of view reset to:", defaultFieldOfView)
+            if Camera then
+                Camera.FieldOfView = defaultFieldOfView -- Reset field of view to default value
+                print("Field of view reset to:", defaultFieldOfView)
+            else
+                print("Error: Camera not found.")
+            end
         end
     })
 
@@ -275,7 +283,6 @@ do
     Slider:SetValue(3)
 
     -- field of view
-    local Camera = workspace.CurrentCamera
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "field of view",
         Description = "This is a slider",
@@ -284,14 +291,22 @@ do
         Max = 120,
         Rounding = 1,
         Callback = function(Value)
-            Camera.FieldOfView = Value
-            defaultFieldOfView = Value -- Update default field of view
-            print("Field of view set to:", Value)
+            if Camera then
+                Camera.FieldOfView = Value
+                defaultFieldOfView = Value -- Update default field of view
+                print("Field of view set to:", Value)
+            else
+                print("Error: Camera not found.")
+            end
         end
     })
-    
+
     -- Set initial field of view
-    Camera.FieldOfView = defaultFieldOfView
+    if Camera then
+        Camera.FieldOfView = defaultFieldOfView
+    else
+        print("Error: Camera not found.")
+    end
 
 end
 
