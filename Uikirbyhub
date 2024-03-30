@@ -2,7 +2,7 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- Heeee's baaaack 🗣️
+-- 11111111111111111111111
 
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
@@ -206,38 +206,66 @@ do
     local section = Tabs.General:AddSection("Player Properties")
 
     -- Reset
-    local defaultFieldOfView = 70 
-    local Camera = workspace.CurrentCamera
-    Camera.FieldOfView = defaultFieldOfView
-
     Tabs.General:AddButton({
         Title = "Reset",
         Description = "This button will reset your settings to their original state.",
         Callback = function()
-            Camera.FieldOfView = defaultFieldOfView -- Reset field of view to default value
-            Slider:Set(defaultFieldOfView) -- Reset slider value
-            print("Field of view reset to:", defaultFieldOfView)
+            Window:Dialog({
+                Title = "Reset",
+                Content = "Are you sure you want to reset the settings?",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            print("Confirmed the dialog.")
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
         end
     })
 
     -- player speed
+    local function WalkSpeedChange(speed)
+        local speaker = game.Players.LocalPlayer
+        if speaker then
+            local Char = speaker.Character or workspace:FindFirstChild(speaker.Name)
+            local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
+            if Char and Human then
+                Human.WalkSpeed = speed
+            end
+        end
+    end
+    
     local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "player speed",
-        Description = "This is a slider",
-        Default = 2,
-        Min = 0,
-        Max = 5,
+        Title = "Player Speed",
+        Description = "Adjust the player's speed",
+        Default = 16,
+        Min = 16,
+        Max = 120,
         Rounding = 1,
         Callback = function(Value)
-            print("Slider was changed:", Value)
+            WalkSpeedChange(Value)
         end
     })
-
+    
     Slider:OnChanged(function(Value)
         print("Slider changed:", Value)
     end)
-
-    Slider:SetValue(3)
+    
+    -- Function to update walk speed if the slider changes
+    local function UpdateWalkSpeed(Value)
+        WalkSpeedChange(Value)
+    end
+    
+    -- Initial update
+    UpdateWalkSpeed(Slider:GetValue())
 
     -- jump power
     local Slider = Tabs.General:AddSlider("Slider", {
@@ -278,10 +306,11 @@ do
     Slider:SetValue(3)
 
     -- field of view
+    local Camera = workspace.CurrentCamera
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "field of view",
         Description = "This is a slider",
-        Default = defaultFieldOfView,
+        Default = 70,
         Min = 70,
         Max = 120,
         Rounding = 1,
@@ -290,6 +319,9 @@ do
             print("Field of view set to:", Value)
         end
     })
+    
+    -- Set initial field of view
+    Camera.FieldOfView = Slider:Get()
 
 end
 
