@@ -166,6 +166,7 @@ do
     -- Refresh
     Tabs.General:AddButton({
         Title = "Refresh",
+        Icon = "rotate-cw",
         Description = "This button will refresh your character.",
         Callback = function()
             Window:Dialog({
