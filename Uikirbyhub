@@ -2,7 +2,7 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- i come back😈😈
+-- Heeee's baaaack 🗣️
 
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
@@ -286,22 +286,10 @@ do
         Max = 120,
         Rounding = 1,
         Callback = function(Value)
-            if Camera then
-                Camera.FieldOfView = Value
-                defaultFieldOfView = Value -- Update default field of view
-                print("Field of view set to:", Value)
-            else
-                print("Error: Camera not found.")
-            end
+            Camera.FieldOfView = Value
+            print("Field of view set to:", Value)
         end
     })
-
-    -- Set initial field of view
-    if Camera then
-        Camera.FieldOfView = defaultFieldOfView
-    else
-        print("Error: Camera not found.")
-    end
 
 end
 
