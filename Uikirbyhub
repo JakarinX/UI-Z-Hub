@@ -293,8 +293,8 @@ do
         Description = "This is a slider",
         Default = 70,
         Min = 70,
-        Max = 360,
-        Rounding = 10,
+        Max = 120,
+        Rounding = 10.0,
         Callback = function(Value)
             Camera.FieldOfView = Value
             print("Field of view set to:", Value)
