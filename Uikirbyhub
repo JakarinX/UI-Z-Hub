@@ -21,15 +21,7 @@ local Tabs = {
 local Options = Fluent.Options
 
 do
-    Fluent:Notify({
-        Title = "Kirby hub",
-        Content = "This is a notification",
-        SubContent = "The Kirby Hub script was successfully.",
-        Duration = 5
-    })
-
-
--- General
+    -- General
     -- Player Actions
     local section = Tabs.General:AddSection("Player Actions")
 
@@ -142,13 +134,6 @@ do
         _G.FullBrightExecuted = true
     end
 
-    -- Infinite Stamina
-    local Toggle = Tabs.General:AddToggle("MyInfinite Stamina", {Title = "Infinite Stamina", Default = false })
-
-    Toggle:OnChanged(function()
-        print("Toggle changed:")
-    end)
-
     -- Noclip
     local Toggle = Tabs.General:AddToggle("MyNoclip", {Title = "Noclip", Default = false })
 
@@ -162,6 +147,33 @@ do
     Toggle:OnChanged(function()
         print("Toggle changed:")
     end)
+
+    -- Infinite Stamina
+    Tabs.General:AddButton({
+        Title = "Infinite Stamina",
+        Icon = "infinity",
+        Description = "This button will refresh your character.",
+        Callback = function()
+            Window:Dialog({
+                Title = "Reset",
+                Content = "Are you sure you want to refresh?",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            print("Confirmed the dialog.")
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
+        end
+    })
 
     -- Refresh
     Tabs.General:AddButton({
@@ -326,7 +338,7 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 Window:SelectTab(1)
 
 Fluent:Notify({
-    Title = "Fluent",
+    Title = "Kirby hub",
     Content = "The script has been loaded.",
     Duration = 8
 })
