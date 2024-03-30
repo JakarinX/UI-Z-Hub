@@ -188,7 +188,22 @@ do
         else
             StopCfly()
         end
-    end)  
+    end)
+    
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "cfly speed",
+        Description = "This is a slider",
+        Default = 50,
+        Min = 50,
+        Max = 200,
+        Rounding = 1,
+        Callback = function(speed)
+            CFspeed = speed
+            if isCflyEnabled then
+                StartCfly(speed)
+            end
+        end
+    })    
 
     -- Infinite Stamina
     Tabs.General:AddButton({
@@ -309,14 +324,14 @@ do
 
     Slider:SetValue(3)
 
-    -- cfly speed
+    -- filght speed
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "cfly speed",
         Description = "This is a slider",
         Default = 50,
         Min = 50,
         Max = 200,
-        Rounding = 10,
+        Rounding = 1,
         Callback = function(speed)
             CFspeed = speed
             if isCflyEnabled then
