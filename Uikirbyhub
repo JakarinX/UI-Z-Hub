@@ -2,7 +2,7 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- 11111111111111111111111
+-- 1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1
 
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
@@ -260,12 +260,13 @@ do
     end)
     
     -- Function to update walk speed if the slider changes
-    local function UpdateWalkSpeed(Value)
+    local function UpdateWalkSpeed()
+        local Value = Slider:GetValue()
         WalkSpeedChange(Value)
     end
     
     -- Initial update
-    UpdateWalkSpeed(Slider:GetValue())
+    UpdateWalkSpeed()    
 
     -- jump power
     local Slider = Tabs.General:AddSlider("Slider", {
