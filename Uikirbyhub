@@ -2,8 +2,6 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- ฉันยังคงรอเธออยู่นะ:D
-
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
     SubTitle = "version 1.0",
@@ -206,28 +204,14 @@ do
     local section = Tabs.General:AddSection("Player Properties")
 
     -- Reset
+    local defaultFieldOfView = 70
+
     Tabs.General:AddButton({
         Title = "Reset",
         Description = "This button will reset your settings to their original state.",
         Callback = function()
-            Window:Dialog({
-                Title = "Reset",
-                Content = "Are you sure you want to reset the settings?",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            print("Confirmed the dialog.")
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
-                }
-            })
+            Camera.FieldOfView = defaultFieldOfView
+            print("Field of view reset to:", defaultFieldOfView)
         end
     })
 
@@ -292,11 +276,11 @@ do
     local Camera = workspace.CurrentCamera
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "field of view",
-        Description = "field of view",
+        Description = "This is a slider",
         Default = 70,
         Min = 70,
         Max = 120,
-        Rounding = 10.0,
+        Rounding = 1,
         Callback = function(Value)
             Camera.FieldOfView = Value
             print("Field of view set to:", Value)
