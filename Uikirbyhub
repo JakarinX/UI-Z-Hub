@@ -144,8 +144,10 @@ do
     --Fly
     local CFspeed = 50
     local CFloop = nil
+    local isCflyEnabled = false
     
     local function StartCfly(speed)
+        isCflyEnabled = true
         speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = true
         local Head = speaker.Character:WaitForChild("Head")
         Head.Anchored = true
@@ -165,6 +167,7 @@ do
     end
     
     local function StopCfly()
+        isCflyEnabled = false
         if CFloop then
             CFloop:Disconnect()
             speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = false
@@ -185,7 +188,7 @@ do
         else
             StopCfly()
         end
-    end) 
+    end)  
 
     -- Infinite Stamina
     Tabs.General:AddButton({
@@ -313,10 +316,10 @@ do
         Default = 50,
         Min = 50,
         Max = 200,
-        Rounding = 1,
+        Rounding = 10,
         Callback = function(speed)
             CFspeed = speed
-            if Toggle:IsEnabled() then
+            if isCflyEnabled then
                 StartCfly(speed)
             end
         end
