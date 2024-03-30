@@ -3,12 +3,13 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 -- 30/3/2567 General ทำเสร็จเเล้วประมาณ50%
+-- Uiเล็กกว่านี้ต้องเท่าไหร่ว่ะ?
 
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
     SubTitle = "version 1.0",
     TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
+    Size = UDim2.fromOffset(36, 18),
     Acrylic = true,
     Theme = "Dark",
     MinimizeKey = Enum.KeyCode.LeftControl
