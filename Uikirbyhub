@@ -142,68 +142,11 @@ do
     end)   
 
     --Fly
-    local CFspeed = 50
-    local CFloop = nil
-    local isCflyEnabled = false
-    
-    local function StartCfly(speed)
-        isCflyEnabled = true
-        speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = true
-        local Head = speaker.Character:WaitForChild("Head")
-        Head.Anchored = true
-        if CFloop then CFloop:Disconnect() end
-        CFloop = RunService.Heartbeat:Connect(function(deltaTime)
-            local moveDirection = speaker.Character:FindFirstChildOfClass('Humanoid').MoveDirection * (speed * deltaTime)
-            local headCFrame = Head.CFrame
-            local cameraCFrame = workspace.CurrentCamera.CFrame
-            local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
-            cameraCFrame = cameraCFrame * CFrame.new(-cameraOffset.X, -cameraOffset.Y, -cameraOffset.Z + 1)
-            local cameraPosition = cameraCFrame.Position
-            local headPosition = headCFrame.Position
-    
-            local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
-            Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
-        end)
-    end
-    
-    local function StopCfly()
-        isCflyEnabled = false
-        if CFloop then
-            CFloop:Disconnect()
-            speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = false
-            local Head = speaker.Character:WaitForChild("Head")
-            Head.Anchored = false
-        end
-    end
-    
-    local function isNumber(value)
-        return type(value) == "number"
-    end
-    
-    local Toggle = Tabs.General:AddToggle("MyCfly", {Title = "Cfly", Default = false })
-    
-    Toggle:OnChanged(function(isEnabled)
-        if isEnabled then
-            StartCfly(CFspeed)
-        else
-            StopCfly()
-        end
+    local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
     end)
-    
-    local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "cfly speed",
-        Description = "This is a slider",
-        Default = 50,
-        Min = 50,
-        Max = 200,
-        Rounding = 1,
-        Callback = function(speed)
-            CFspeed = speed
-            if isCflyEnabled then
-                StartCfly(speed)
-            end
-        end
-    })    
 
     -- Infinite Stamina
     Tabs.General:AddButton({
@@ -326,29 +269,7 @@ do
 
     -- filght speed
     local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "cfly speed",
-        Description = "This is a slider",
-        Default = 50,
-        Min = 50,
-        Max = 200,
-        Rounding = 1,
-        Callback = function(speed)
-            CFspeed = speed
-            if isCflyEnabled then
-                StartCfly(speed)
-            end
-        end
-    })
-
-    Slider:OnChanged(function(Value)
-        print("Slider changed:", Value)
-    end)
-
-    Slider:SetValue(3)
-
-    -- field of view
-    local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "field of view",
+        Title = "filght speed",
         Description = "This is a slider",
         Default = 2,
         Min = 0,
@@ -364,6 +285,24 @@ do
     end)
 
     Slider:SetValue(3)
+
+    -- field of view
+    local Camera = workspace.CurrentCamera
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "field of view",
+        Description = "This is a slider",
+        Default = 70,
+        Min = 70,
+        Max = 360,
+        Rounding = 10,
+        Callback = function(Value)
+            Camera.FieldOfView = Value
+            print("Field of view set to:", Value)
+        end
+    })
+    
+    -- Set initial field of view
+    Camera.FieldOfView = Slider:Get()
 
 end
 
