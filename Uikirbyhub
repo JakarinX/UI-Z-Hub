@@ -2,6 +2,8 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+-- i win😈😈
+
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
     SubTitle = "version 1.0",
@@ -141,12 +143,66 @@ do
         print("Toggle changed:")
     end)   
 
-    --Fly
-    local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
+    --Cfly
+    -- Define CFspeed and CFloop variables outside any functions so they can be accessed globally
+    local CFspeed = 50
+    local CFloop
 
-    Toggle:OnChanged(function()
-        print("Toggle changed:")
+    -- Function to handle toggling the combined scripts on and off
+    local function ToggleCfly(enabled)
+        if enabled then
+            -- Enable Cfly
+            speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = true
+            local Head = speaker.Character:WaitForChild("Head")
+            Head.Anchored = true
+            -- Connect CFloop to RunService.Heartbeat
+            CFloop = RunService.Heartbeat:Connect(function(deltaTime)
+                local moveDirection = speaker.Character:FindFirstChildOfClass('Humanoid').MoveDirection * (CFspeed * deltaTime)
+                local headCFrame = Head.CFrame
+                local cameraCFrame = workspace.CurrentCamera.CFrame
+                local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
+                cameraCFrame = cameraCFrame * CFrame.new(-cameraOffset.X, -cameraOffset.Y, -cameraOffset.Z + 1)
+                local cameraPosition = cameraCFrame.Position
+                local headPosition = headCFrame.Position
+
+                local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
+                Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
+            end)
+        else
+            -- Disable Cfly
+            if CFloop then
+                CFloop:Disconnect()
+                speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = false
+                local Head = speaker.Character:WaitForChild("Head")
+                Head.Anchored = false
+            end
+        end
+    end
+
+    -- Function to update CFspeed when the slider is changed
+    local function UpdateSpeed(newSpeed)
+        CFspeed = newSpeed
+    end
+
+    -- Add a toggle for enabling/disabling Cfly
+    local Toggle = Tabs.General:AddToggle("MyCfly", {Title = "Cfly", Default = false})
+
+    Toggle:OnChanged(function(enabled)
+        ToggleCfly(enabled)
     end)
+
+    -- Add a slider to control the speed of Cfly
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "Cfly speed",
+        Description = "Adjust the speed of Cfly",
+        Default = 50, -- Default speed value
+        Min = 0,
+        Max = 100, -- You can adjust the maximum speed as needed
+        Rounding = 1,
+        Callback = function(Value)
+            UpdateSpeed(Value)
+        end
+    })
 
     -- Infinite Stamina
     Tabs.General:AddButton({
@@ -266,28 +322,9 @@ do
     -- Initial update
     UpdateWalkSpeed()      
 
-    -- jump power
-    local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "jump power",
-        Description = "This is a slider",
-        Default = 2,
-        Min = 0,
-        Max = 5,
-        Rounding = 1,
-        Callback = function(Value)
-            print("Slider was changed:", Value)
-        end
-    })
-
-    Slider:OnChanged(function(Value)
-        print("Slider changed:", Value)
-    end)
-
-    Slider:SetValue(3)
-
     -- filght speed
     local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "filght speed",
+        Title = "cfly speed",
         Description = "This is a slider",
         Default = 2,
         Min = 0,
