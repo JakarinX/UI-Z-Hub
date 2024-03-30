@@ -2,7 +2,7 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- i win😈😈
+-- I'M GOD MAN😈😈
 
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
@@ -144,37 +144,54 @@ do
     end)   
 
     --Cfly
-    -- Define CFspeed and CFloop variables outside any functions so they can be accessed globally
-    local CFspeed = 50
-    local CFloop
+    -- Check if speaker is a valid player
+    if not speaker or not speaker:IsA("Player") then
+        return
+    end
 
     -- Function to handle toggling the combined scripts on and off
     local function ToggleCfly(enabled)
         if enabled then
             -- Enable Cfly
-            speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = true
-            local Head = speaker.Character:WaitForChild("Head")
-            Head.Anchored = true
-            -- Connect CFloop to RunService.Heartbeat
-            CFloop = RunService.Heartbeat:Connect(function(deltaTime)
-                local moveDirection = speaker.Character:FindFirstChildOfClass('Humanoid').MoveDirection * (CFspeed * deltaTime)
-                local headCFrame = Head.CFrame
-                local cameraCFrame = workspace.CurrentCamera.CFrame
-                local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
-                cameraCFrame = cameraCFrame * CFrame.new(-cameraOffset.X, -cameraOffset.Y, -cameraOffset.Z + 1)
-                local cameraPosition = cameraCFrame.Position
-                local headPosition = headCFrame.Position
+            local character = speaker.Character
+            if character then
+                local humanoid = character:FindFirstChildOfClass('Humanoid')
+                if humanoid then
+                    humanoid.PlatformStand = true
+                    local Head = character:WaitForChild("Head")
+                    if Head then
+                        Head.Anchored = true
+                        -- Connect CFloop to RunService.Heartbeat
+                        CFloop = RunService.Heartbeat:Connect(function(deltaTime)
+                            local moveDirection = humanoid.MoveDirection * (CFspeed * deltaTime)
+                            local headCFrame = Head.CFrame
+                            local cameraCFrame = workspace.CurrentCamera.CFrame
+                            local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
+                            cameraCFrame = cameraCFrame * CFrame.new(-cameraOffset.X, -cameraOffset.Y, -cameraOffset.Z + 1)
+                            local cameraPosition = cameraCFrame.Position
+                            local headPosition = headCFrame.Position
 
-                local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
-                Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
-            end)
+                            local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
+                            Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
+                        end)
+                    end
+                end
+            end
         else
             -- Disable Cfly
             if CFloop then
                 CFloop:Disconnect()
-                speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = false
-                local Head = speaker.Character:WaitForChild("Head")
-                Head.Anchored = false
+                local character = speaker.Character
+                if character then
+                    local humanoid = character:FindFirstChildOfClass('Humanoid')
+                    if humanoid then
+                        humanoid.PlatformStand = false
+                        local Head = character:WaitForChild("Head")
+                        if Head then
+                            Head.Anchored = false
+                        end
+                    end
+                end
             end
         end
     end
@@ -196,14 +213,13 @@ do
         Title = "Cfly speed",
         Description = "Adjust the speed of Cfly",
         Default = 50, -- Default speed value
-        Min = 0,
+        Min = 50,
         Max = 100, -- You can adjust the maximum speed as needed
         Rounding = 1,
         Callback = function(Value)
             UpdateSpeed(Value)
         end
     })
-
     -- Infinite Stamina
     Tabs.General:AddButton({
         Title = "Infinite Stamina",
