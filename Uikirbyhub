@@ -277,18 +277,19 @@ do
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "field of view",
         Description = "This is a slider",
-        Default = 70,
+        Default = defaultFieldOfView,
         Min = 70,
         Max = 120,
         Rounding = 1,
         Callback = function(Value)
             Camera.FieldOfView = Value
+            defaultFieldOfView = Value -- Update default field of view
             print("Field of view set to:", Value)
         end
     })
     
     -- Set initial field of view
-    Camera.FieldOfView = Slider:Get()
+    Camera.FieldOfView = defaultFieldOfView
 
 end
 
