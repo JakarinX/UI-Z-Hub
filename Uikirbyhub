@@ -3,6 +3,7 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 -- รอใคร รอใคร นันสินะ
+-- cr. Jakarin suwansing
 
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
