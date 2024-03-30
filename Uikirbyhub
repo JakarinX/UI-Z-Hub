@@ -2,8 +2,6 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- สคริปได้ประมาณ 50%
-
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
     SubTitle = "version 1.0",
@@ -137,11 +135,47 @@ do
     end
 
     -- Noclip
+    -- Assuming 'RunService' and 'execCmd' are defined elsewhere in your script
+
+    local Noclipping = nil
+    local Clip = false
+
+    local function NoclipLoop()
+        if not Clip and speaker.Character then
+            for _, child in pairs(speaker.Character:GetDescendants()) do
+                if child:IsA("BasePart") and child.CanCollide then
+                    child.CanCollide = false
+                end
+            end
+        end
+    end
+
+    -- Function to toggle noclip
+    local function ToggleNoclip()
+        if Noclipping then
+            Noclipping:Disconnect() -- Disconnect the loop if it's running
+        end
+        if not Clip then
+            execCmd('clip') -- If noclip is disabled, enable clipping
+        end
+        Clip = not Clip -- Toggle the state
+    end
+
+    -- Event handler for when the toggle is changed
+    local function OnToggleChanged(isEnabled)
+        if isEnabled then
+            if Clip then
+                execCmd('noclip') -- If noclip is enabled, disable it
+            end
+            Noclipping = RunService.Stepped:Connect(NoclipLoop) -- Start the loop
+        else
+            ToggleNoclip() -- Toggle noclip off
+        end
+    end
+
     local Toggle = Tabs.General:AddToggle("MyNoclip", {Title = "Noclip", Default = false })
 
-    Toggle:OnChanged(function()
-        print("Toggle changed:")
-    end)   
+    Toggle:OnChanged(OnToggleChanged) 
 
     --Cfly
     local Toggle = Tabs.General:AddToggle("MyCfly", {Title = "Cfly", Default = false })
