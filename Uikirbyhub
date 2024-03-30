@@ -142,16 +142,73 @@ do
     end)   
 
     --Fly
-    local Toggle = Tabs.General:AddToggle("MyFly", {Title = "Fly", Default = false })
+    -- Define initial cframe fly speed
+    local CFspeed = 50
 
-    Toggle:OnChanged(function()
-        print("Toggle changed:")
+    -- Function to add commands to the CLI
+    local function addcmd(name, aliases, func)
+        -- Your implementation of addcmd function
+    end
+
+    -- Function to enable cframe fly
+    local function enableCFrameFly(speaker)
+        -- Full credit to peyton#9148 (apeyton)
+        speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = true
+        local Head = speaker.Character:WaitForChild("Head")
+        Head.Anchored = true
+        if CFloop then CFloop:Disconnect() end
+        CFloop = RunService.Heartbeat:Connect(function(deltaTime)
+            local moveDirection = speaker.Character:FindFirstChildOfClass('Humanoid').MoveDirection * (CFspeed * deltaTime)
+            local headCFrame = Head.CFrame
+            local cameraCFrame = workspace.CurrentCamera.CFrame
+            local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
+            cameraCFrame = cameraCFrame * CFrame.new(-cameraOffset.X, -cameraOffset.Y, -cameraOffset.Z + 1)
+            local cameraPosition = cameraCFrame.Position
+            local headPosition = headCFrame.Position
+
+            local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
+            Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
+        end)
+    end
+
+    -- Function to disable cframe fly
+    local function disableCFrameFly(speaker)
+        if CFloop then
+            CFloop:Disconnect()
+            speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = false
+            local Head = speaker.Character:WaitForChild("Head")
+            Head.Anchored = false
+        end
+    end
+
+    -- Function to set cframe fly speed
+    local function setCFrameFlySpeed(speed)
+        if type(speed) == "number" then
+            CFspeed = speed
+        end
+    end
+
+    -- Adding commands
+    addcmd('cframefly', {'cfly'}, enableCFrameFly)
+    addcmd('uncframefly', {'uncfly'}, disableCFrameFly)
+    addcmd('cframeflyspeed', {'cflyspeed'}, setCFrameFlySpeed)
+
+    -- GUI toggle creation
+    local Toggle = Tabs.General:AddToggle("MyCfly", {Title = "Cfly", Default = false })
+
+    -- Function to handle toggle state change
+    Toggle:OnChanged(function(isEnabled)
+        if isEnabled then
+            enableCFrameFly(speaker) -- Assuming you have access to 'speaker' variable
+        else
+            disableCFrameFly(speaker) -- Assuming you have access to 'speaker' variable
+        end
     end)
+
 
     -- Infinite Stamina
     Tabs.General:AddButton({
         Title = "Infinite Stamina",
-        Icon = "infinity",
         Description = "This button will refresh your character.",
         Callback = function()
             Window:Dialog({
@@ -178,7 +235,6 @@ do
     -- Refresh
     Tabs.General:AddButton({
         Title = "Refresh",
-        Icon = "rotate-cw",
         Description = "This button will refresh your character.",
         Callback = function()
             Window:Dialog({
@@ -271,7 +327,7 @@ do
 
     -- filght speed
     local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "filght speed",
+        Title = "cfly speed",
         Description = "This is a slider",
         Default = 2,
         Min = 0,
