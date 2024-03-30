@@ -290,7 +290,7 @@ do
     local Camera = workspace.CurrentCamera
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "field of view",
-        Description = "This is a slider",
+        Description = "field of view",
         Default = 70,
         Min = 70,
         Max = 120,
