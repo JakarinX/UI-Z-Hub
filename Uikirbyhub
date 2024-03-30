@@ -2,8 +2,7 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- รอใคร รอใคร นันสินะ
--- cr. Jakarin suwansing
+-- i come back😈😈
 
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
@@ -207,22 +206,17 @@ do
     local section = Tabs.General:AddSection("Player Properties")
 
     -- Reset
-    local Camera = workspace.CurrentCamera
-
-    -- Define default field of view
     local defaultFieldOfView = 70 
+    local Camera = workspace.CurrentCamera
+    Camera.FieldOfView = defaultFieldOfView
 
-    -- Add Reset button
     Tabs.General:AddButton({
         Title = "Reset",
         Description = "This button will reset your settings to their original state.",
         Callback = function()
-            if Camera then
-                Camera.FieldOfView = defaultFieldOfView -- Reset field of view to default value
-                print("Field of view reset to:", defaultFieldOfView)
-            else
-                print("Error: Camera not found.")
-            end
+            Camera.FieldOfView = defaultFieldOfView -- Reset field of view to default value
+            Slider:Set(defaultFieldOfView) -- Reset slider value
+            print("Field of view reset to:", defaultFieldOfView)
         end
     })
 
