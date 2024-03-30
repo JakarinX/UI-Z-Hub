@@ -2,9 +2,6 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- 30/3/2567 General ทำเสร็จเเล้วประมาณ50%
--- Uiเล็กกว่านี้ต้องเท่าไหร่ว่ะ?
-
 local Window = Fluent:CreateWindow({
     Title = "The Mimic - Kirby hub ",
     SubTitle = "version 1.0",
@@ -295,8 +292,8 @@ do
         Description = "This is a slider",
         Default = 70,
         Min = 70,
-        Max = 120,
-        Rounding = 1,
+        Max = 360,
+        Rounding = 10,
         Callback = function(Value)
             Camera.FieldOfView = Value
             print("Field of view set to:", Value)
@@ -304,7 +301,7 @@ do
     })
     
     -- Set initial field of view
-    Camera.FieldOfView = Slider:Get()
+    Camera.FieldOfView = Slider.Default    
 
 end
 
