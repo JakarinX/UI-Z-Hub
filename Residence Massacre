@@ -2,8 +2,6 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- คิดถึงจัง
-
 local Window = Fluent:CreateWindow({
     Title = "Residence Massacre - Kirby hub ",
     SubTitle = "Last updated April 1 2024",
@@ -211,8 +209,7 @@ do
     })
 
     -- Jump Powen
-    ('jpower',{'jumppower','jp'},function(args, speaker)
-        local jpower = args[1] or 50
+    local jpower = args[1] or 50
         if isNumber(jpower) then
             if speaker.Character:FindFirstChildOfClass('Humanoid').UseJumpPower then
                 speaker.Character:FindFirstChildOfClass('Humanoid').JumpPower = jpower
@@ -220,7 +217,7 @@ do
                 speaker.Character:FindFirstChildOfClass('Humanoid').JumpHeight  = jpower
             end
         end
-    end)
+    end
     
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "Jump Power",
