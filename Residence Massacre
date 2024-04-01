@@ -25,6 +25,13 @@ do
     -- Player Actions
     local section = Tabs.General:AddSection("Player Actions")
 
+    local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:", Options.MyToggle.Value)
+    end)
+
+    Options.MyToggle:SetValue(false)
 end
 
 
@@ -56,7 +63,7 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 Window:SelectTab(1)
 
 Fluent:Notify({
-    Title = "Fluent",
+    Title = "Kirby hub",
     Content = "The script has been loaded.",
     Duration = 8
 })
