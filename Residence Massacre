@@ -2,8 +2,6 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- โคตรเหงๅควยเมื่อไหร่จะมีคนที่จริงใจเข้ามาในชีิวตme
-
 local Window = Fluent:CreateWindow({
     Title = "Residence Massacre - Kirby hub ",
     SubTitle = "Last updated April 1 2024",
@@ -184,13 +182,27 @@ do
     end
 
     -- Infinite Stamina
-    Tabs.General:AddButton({
-        Title = "Infinite Stamina",
-        Description = "This button will refresh your character.",
-        Callback = function(isOn)
+    local Toggle = Tabs.General:AddToggle("MyInfiniteStamina", {Title = "Infinite Stamina", Default = false })
 
+    local function activateInfiniteStamina()
+        if Self.Name == "Stam" and Key == "Value" and OrionLib.Flags["infinite_stamina"].Value == true then
+            newIndexHook(Self, Key, 5, ...)
+            print("Infinite stamina activated")
         end
-    })
+    end
+    
+    local function deactivateInfiniteStamina()
+        print("Infinite stamina deactivated")
+        -- Any other actions you may want to take when turning off the infinite stamina
+    end
+    
+    Toggle:OnChanged(function(isOn)
+        if isOn then
+            activateInfiniteStamina()
+        else
+            deactivateInfiniteStamina()
+        end
+    end)    
 
     -- Player Properties
     local section = Tabs.General:AddSection("Player Properties")
@@ -222,48 +234,6 @@ do
     Slider:OnChanged(function(Value)
         print("Slider changed:", Value)
     end)
-    
-    -- jumppower
-    local function isNumber(value)
-        return type(value) == "number"
-    end
-    
-    -- Assuming `args` and `speaker` are already defined elsewhere
-    
-    local jpower = args and (isNumber(args[1]) and args[1]) or 50 -- Check if args is not nil, then check if args[1] is a number
-    
-    local function setJumpPower(jumpPowerValue)
-        if isNumber(jumpPowerValue) then
-            if speaker and speaker.Character then -- Ensure speaker and speaker.Character are not nil
-                local humanoid = speaker.Character:FindFirstChildOfClass('Humanoid')
-                if humanoid then
-                    if humanoid.UseJumpPower then
-                        humanoid.JumpPower = jumpPowerValue
-                    else
-                        humanoid.JumpHeight = jumpPowerValue
-                    end
-                end
-            else
-                warn("Speaker or speaker's character is nil.")
-            end
-        else
-            warn("Invalid jump power value.")
-        end
-    end
-    
-    local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "Jump Power",
-        Description = "Adjust the character's jump power",
-        Default = jpower,
-        Min = 50,
-        Max = 200,
-        Rounding = 1,
-        Callback = function(Value)
-            setJumpPower(Value)
-        end
-    })
-    
-    setJumpPower(jpower)    
 
     -- field of view
     local Camera = workspace.CurrentCamera
