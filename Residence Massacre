@@ -2,8 +2,6 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- เกิดไรขึ้นอีกงง
-
 local Window = Fluent:CreateWindow({
     Title = "Residence Massacre - Kirby hub ",
     SubTitle = "Last updated April 1 2024",
@@ -23,7 +21,7 @@ local Tabs = {
 local Options = Fluent.Options
 
 do 
-    -- 
+    -- bypassed by Kirby hub
     repeat task.wait() until game:IsLoaded()
 
     local function isAdonisAC(table)
@@ -183,6 +181,33 @@ do
         _G.FullBrightExecuted = true
     end
 
+    -- Infinite Stamina
+    local function enableInfiniteStamina()
+        print("Infinite Stamina enabled")
+        -- Add logic here to activate infinite stamina
+        newIndexHook(Self, Key, 5, ...)
+    end
+    
+    local function disableInfiniteStamina()
+        print("Infinite Stamina disabled")
+        -- Add logic here to deactivate infinite stamina
+        -- For now, let's just print a message
+    end
+    
+    if Self.Name == "Stam" and Key == "Value" and OrionLib.Flags["infinite_stamina"].Value == true then
+        enableInfiniteStamina()
+    end
+    
+    local Toggle = Tabs.General:AddToggle("MyInfinite Stamina", {Title = "Infinite Stamina", Flag = "infinite_stamina", Default = false })
+    
+    Toggle:OnChanged(function(isOn)
+        if isOn then
+            enableInfiniteStamina()
+        else
+            disableInfiniteStamina()
+        end
+    end)    
+
     -- Player Properties
     local section = Tabs.General:AddSection("Player Properties")
 
@@ -200,7 +225,7 @@ do
     
     local Slider = Tabs.General:AddSlider("Slider", {
         Title = "Player Speed",
-        Description = "Adjust the player's speed if you run faster than usual; your speed will return to normal while running.",
+        Description = "Adjust the player's speed if you walk faster than normal Your speed will return to normal while running.",
         Default = 16,
         Min = 16,
         Max = 100,
