@@ -2,6 +2,8 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+-- โคตรเหงๅควยเมื่อไหร่จะมีคนที่จริงใจเข้ามาในชีิวตme
+
 local Window = Fluent:CreateWindow({
     Title = "Residence Massacre - Kirby hub ",
     SubTitle = "Last updated April 1 2024",
@@ -232,14 +234,20 @@ do
     
     local function setJumpPower(jumpPowerValue)
         if isNumber(jumpPowerValue) then
-            local humanoid = speaker.Character:FindFirstChildOfClass('Humanoid')
-            if humanoid then
-                if humanoid.UseJumpPower then
-                    humanoid.JumpPower = jumpPowerValue
-                else
-                    humanoid.JumpHeight = jumpPowerValue
+            if speaker and speaker.Character then -- Ensure speaker and speaker.Character are not nil
+                local humanoid = speaker.Character:FindFirstChildOfClass('Humanoid')
+                if humanoid then
+                    if humanoid.UseJumpPower then
+                        humanoid.JumpPower = jumpPowerValue
+                    else
+                        humanoid.JumpHeight = jumpPowerValue
+                    end
                 end
+            else
+                warn("Speaker or speaker's character is nil.")
             end
+        else
+            warn("Invalid jump power value.")
         end
     end
     
