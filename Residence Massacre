@@ -221,6 +221,40 @@ do
         print("Slider changed:", Value)
     end)
     
+    -- jumppower
+    local function isNumber(value)
+        return type(value) == "number"
+    end
+    
+    local jpower = args[1] or 50
+    
+    local function setJumpPower(jumpPowerValue)
+        if isNumber(jumpPowerValue) then
+            local humanoid = speaker.Character:FindFirstChildOfClass('Humanoid')
+            if humanoid then
+                if humanoid.UseJumpPower then
+                    humanoid.JumpPower = jumpPowerValue
+                else
+                    humanoid.JumpHeight = jumpPowerValue
+                end
+            end
+        end
+    end
+    
+    local Slider = Tabs.Main:AddSlider("Slider", {
+        Title = "Jump Power",
+        Description = "Adjust the character's jump power",
+        Default = jpower,
+        Min = 50,
+        Max = 200,
+        Rounding = 1,
+        Callback = function(Value)
+            setJumpPower(Value)
+        end
+    })
+    
+    setJumpPower(jpower)    
+
     -- field of view
     local Camera = workspace.CurrentCamera
     local Slider = Tabs.General:AddSlider("Slider", {
