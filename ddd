@@ -1,291 +1,374 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+local Player = game.Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
 
-local Window = Fluent:CreateWindow({
-    Title = "Residence Massacre - Kirby hub ",
-    SubTitle = "Last updated April 1 2024",
-    TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
-    Acrylic = true,
-    Theme = "Dark",
-    MinimizeKey = Enum.KeyCode.LeftControl
+local Lighting = game:GetService("Lighting")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostDuckyy/ESP-Library/main/Kiriot22/source.lua"))()
+ESP.Players = false
+ESP:Toggle(true)
+
+local MainWindow = OrionLib:MakeWindow({
+    Name = "Residence Massacre",
+    HidePremium = true,
+    SaveConfig = true,
+    ConfigFolder = "Residence Massacre",
+    IntroEnabled = false,
 })
 
---Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
-local Tabs = {
-    General = Window:AddTab({ Title = "General", Icon = "home" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
-}
+-- Credits to getgc for adonis bypass
+loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Misc-Script/main/adonis%20ac%20bypass.lua"))()
 
-local Options = Fluent.Options
+local antiCheatBypass; antiCheatBypass = hookmetamethod(game, "__namecall", function(self, ...)
+    local method = getnamecallmethod()
 
-do 
-    -- 
-    repeat task.wait() until game:IsLoaded()
-
-    local function isAdonisAC(table)
-        return rawget(table, "Detected") and typeof(rawget(table, "Detected")) == "function" and rawget(table, "RLocked")
+    if string.lower(method) == "kick" then
+        return task.wait(9e9)
     end
 
-    warn("https://discord.gg/BJGq7QqRwn")
-
-    for _, v in next, getgc(true) do
-        if typeof(v) == "table" and isAdonisAC(v) then
-
-            for i, v in next, v do
-                warn(print, i, typeof(v))
-                if rawequal(i, "Detected") then
-
-                    local old;
-                    old = hookfunction(v, function(action, info, nocrash)
-                        if rawequal(action, "_") and rawequal(info, "_") and rawequal(nocrash, true) then
-
-                            return old(action, info, nocrash)
-                        end
-
-                        return task.wait(9e9)
-                    end)
-                    warn("bypassed adonis ac")
-                    break
-                end
-            end
-        end
-    end
-
-    local antiCheatBypass; antiCheatBypass = hookmetamethod(game, "__namecall", function(self, ...)
-        local method = getnamecallmethod()
-    
-        if string.lower(method) == "kick" then
+    if string.lower(method) == "fireserver" then
+        if string.lower(self.Name) == "kick" then
             return task.wait(9e9)
         end
-    
-        if string.lower(method) == "fireserver" then
-            if string.lower(self.Name) == "kick" then
-                return task.wait(9e9)
-            end
-        end
-    
-        return antiCheatBypass(self, ...)
-    end)
-    
-    print("sucessfully bypassed client-sided anti-cheat")
-
-    -- General
-    -- Player Actions
-    local section = Tabs.General:AddSection("Player Actions")
-    
-    -- Fullbright
-    local function EnableFullBright()
-        _G.FullBrightEnabled = true
-        game:GetService("Lighting").Brightness = 1
-        game:GetService("Lighting").ClockTime = 12
-        game:GetService("Lighting").FogEnd = 786543
-        game:GetService("Lighting").GlobalShadows = false
-        game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
     end
 
-    local function DisableFullBright()
-        _G.FullBrightEnabled = false
-        if _G.NormalLightingSettings then
-            local normalSettings = _G.NormalLightingSettings
-            game:GetService("Lighting").Brightness = normalSettings.Brightness
-            game:GetService("Lighting").ClockTime = normalSettings.ClockTime
-            game:GetService("Lighting").FogEnd = normalSettings.FogEnd
-            game:GetService("Lighting").GlobalShadows = normalSettings.GlobalShadows
-            game:GetService("Lighting").Ambient = normalSettings.Ambient
+    return antiCheatBypass(self, ...)
+end)
+
+print("Sucessfully bypassed client-sided anti-cheat")
+
+local walkSpeed = 12
+local sprintSpeed = 17
+
+local newIndexHook; newIndexHook = hookmetamethod(game, "__newindex", function(Self, Key, NewValue, ...)
+    if checkcaller() then
+        return newIndexHook(Self, Key, NewValue, ...)
+    end
+
+    if Self == Player and Key == "CameraMode" and OrionLib.Flags["unlock_third_person"].Value == true then
+        return newIndexHook(Self, Key, Enum.CameraMode.Classic, ...)
+    end
+
+    if Self.Name == "Stam" and Key == "Value" and OrionLib.Flags["infinite_stamina"].Value == true then
+        return newIndexHook(Self, Key, 5, ...)
+    end
+
+    if Self.Name == "Humanoid" and Self.Parent.Name == Player.Name and Key == "WalkSpeed" then
+        if NewValue == 12 then
+            return newIndexHook(Self, Key, walkSpeed, ...)
+        elseif NewValue == 17 then
+            return newIndexHook(Self, Key, sprintSpeed, ...)
         end
     end
 
-    local Toggle = Tabs.General:AddToggle("MyFullbright", {Title = "Fullbright", Default = false })
+    return newIndexHook(Self, Key, NewValue, ...)
+end)
 
-    Toggle:OnChanged(function(isEnabled)
-        if isEnabled then
-            EnableFullBright()
-        else
-            DisableFullBright()
-        end
-    end)
-
-    if not _G.FullBrightExecuted then
-        _G.FullBrightEnabled = false
-
-        _G.NormalLightingSettings = {
-            Brightness = game:GetService("Lighting").Brightness,
-            ClockTime = game:GetService("Lighting").ClockTime,
-            FogEnd = game:GetService("Lighting").FogEnd,
-            GlobalShadows = game:GetService("Lighting").GlobalShadows,
-            Ambient = game:GetService("Lighting").Ambient
-        }
-
-        game:GetService("Lighting"):GetPropertyChangedSignal("Brightness"):Connect(function()
-            if game:GetService("Lighting").Brightness ~= 1 and game:GetService("Lighting").Brightness ~= _G.NormalLightingSettings.Brightness then
-                _G.NormalLightingSettings.Brightness = game:GetService("Lighting").Brightness
-                if not _G.FullBrightEnabled then
-                    repeat
-                        wait()
-                    until _G.FullBrightEnabled
-                end
-                game:GetService("Lighting").Brightness = 1
-            end
-        end)
-
-        game:GetService("Lighting"):GetPropertyChangedSignal("ClockTime"):Connect(function()
-            if game:GetService("Lighting").ClockTime ~= 12 and game:GetService("Lighting").ClockTime ~= _G.NormalLightingSettings.ClockTime then
-                _G.NormalLightingSettings.ClockTime = game:GetService("Lighting").ClockTime
-                if not _G.FullBrightEnabled then
-                    repeat
-                        wait()
-                    until _G.FullBrightEnabled
-                end
-                game:GetService("Lighting").ClockTime = 12
-            end
-        end)
-
-        game:GetService("Lighting"):GetPropertyChangedSignal("FogEnd"):Connect(function()
-            if game:GetService("Lighting").FogEnd ~= 786543 and game:GetService("Lighting").FogEnd ~= _G.NormalLightingSettings.FogEnd then
-                _G.NormalLightingSettings.FogEnd = game:GetService("Lighting").FogEnd
-                if not _G.FullBrightEnabled then
-                    repeat
-                        wait()
-                    until _G.FullBrightEnabled
-                end
-                game:GetService("Lighting").FogEnd = 786543
-            end
-        end)
-
-        game:GetService("Lighting"):GetPropertyChangedSignal("GlobalShadows"):Connect(function()
-            if game:GetService("Lighting").GlobalShadows ~= false and game:GetService("Lighting").GlobalShadows ~= _G.NormalLightingSettings.GlobalShadows then
-                _G.NormalLightingSettings.GlobalShadows = game:GetService("Lighting").GlobalShadows
-                if not _G.FullBrightEnabled then
-                    repeat
-                        wait()
-                    until _G.FullBrightEnabled
-                end
-                game:GetService("Lighting").GlobalShadows = false
-            end
-        end)
-
-        game:GetService("Lighting"):GetPropertyChangedSignal("Ambient"):Connect(function()
-            if game:GetService("Lighting").Ambient ~= Color3.fromRGB(178, 178, 178) and game:GetService("Lighting").Ambient ~= _G.NormalLightingSettings.Ambient then
-                _G.NormalLightingSettings.Ambient = game:GetService("Lighting").Ambient
-                if not _G.FullBrightEnabled then
-                    repeat
-                        wait()
-                    until _G.FullBrightEnabled
-                end
-                game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
-            end
-        end)
-
-        _G.FullBrightExecuted = true
+local fullbrightEnabled = false
+game:GetService("RunService").Heartbeat:Connect(function()
+    if fullbrightEnabled then
+        Lighting.Brightness = 2
+        Lighting.ClockTime = 14
+        Lighting.FogEnd = 100000
+        Lighting.GlobalShadows = false
+        Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
     end
+end)
 
-    -- Infinite Stamina
-    local Toggle = Tabs.General:AddToggle("MyInfiniteStamina", {Title = "Infinite Stamina", Default = false })
-
-    local function activateInfiniteStamina()
-        if Self.Name == "Stam" and Key == "Value" and OrionLib.Flags["infinite_stamina"].Value == true then
-            newIndexHook(Self, Key, 5, ...)
-            print("Infinite stamina activated")
-        end
-    end
-    
-    local function deactivateInfiniteStamina()
-        print("Infinite stamina deactivated")
-        -- Any other actions you may want to take when turning off the infinite stamina
-    end
-    
-    Toggle:OnChanged(function(isOn)
-        if isOn then
-            activateInfiniteStamina()
-        else
-            deactivateInfiniteStamina()
-        end
-    end)    
-
-    -- Player Properties
-    local section = Tabs.General:AddSection("Player Properties")
-
-    -- Player Speed
-    local function WalkSpeedChange(speed)
-        local speaker = game.Players.LocalPlayer
-        if speaker then
-            local Char = speaker.Character or workspace:FindFirstChild(speaker.Name)
-            local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
-            if Char and Human then
-                Human.WalkSpeed = speed
-            end
-        end
-    end
-    
-    local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "Player Speed",
-        Description = "Adjust the player's speed",
-        Default = 16,
-        Min = 16,
-        Max = 100,
-        Rounding = 1,
-        Callback = function(Value)
-            WalkSpeedChange(Value)
-        end
-    })
-    
-    Slider:OnChanged(function(Value)
-        print("Slider changed:", Value)
-    end)
-
-    -- field of view
-    local Camera = workspace.CurrentCamera
-    local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "field of view",
-        Description = "This is a slider",
-        Default = 70,
-        Min = 70,
-        Max = 120,
-        Rounding = 1,
-        Callback = function(Value)
-            Camera.FieldOfView = Value
-            print("Field of view set to:", Value)
-        end
-    })
-
-end
-
-
--- Addons:
--- SaveManager (Allows you to have a configuration system)
--- InterfaceManager (Allows you to have a interface managment system)
-
--- Hand the library over to our managers
-SaveManager:SetLibrary(Fluent)
-InterfaceManager:SetLibrary(Fluent)
-
--- Ignore keys that are used by ThemeManager.
--- (we dont want configs to save themes, do we?)
-SaveManager:IgnoreThemeSettings()
-
--- You can add indexes of elements the save manager should ignore
-SaveManager:SetIgnoreIndexes({})
-
--- use case for doing it this way:
--- a script hub could have themes in a global folder
--- and game configs in a separate folder per game
-InterfaceManager:SetFolder("FluentScriptHub")
-SaveManager:SetFolder("FluentScriptHub/specific-game")
-
-InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-SaveManager:BuildConfigSection(Tabs.Settings)
-
-
-Window:SelectTab(1)
-
-Fluent:Notify({
-    Title = "Kirby hub",
-    Content = "The script has been loaded.",
-    Duration = 8
+local MainTab = MainWindow:MakeTab({
+    Name = "Main",
+    PremiumOnly = false
 })
 
--- You can use the SaveManager:LoadAutoloadConfig() to load a config
--- which has been marked to be one that auto loads!
-SaveManager:LoadAutoloadConfig()
+local InfiniteStamina = MainTab:AddToggle({
+    Name = "Infinite Stamina",
+    Default = false,
+    Flag = "infinite_stamina",
+    Save = true,
+    Callback = function(isOn)
+        
+    end
+})
+
+local WalkSpeed = MainTab:AddSlider({
+    Name = "Walk Speed",
+    Min = 12,
+    Max = 100,
+    Default = 12,
+    Increment = 1,
+    Flag = "walk_speed",
+    Save = true,
+    Callback = function(newValue)
+        walkSpeed = newValue
+
+        if Player.Character then
+            Player.Character.Humanoid.WalkSpeed = newValue
+        end
+    end
+})
+
+local SprintSpeed = MainTab:AddSlider({
+    Name = "Sprint Speed",
+    Min = 17,
+    Max = 100,
+    Default = 17,
+    Increment = 1,
+    Flag = "sprint_speed",
+    Save = true,
+    Callback = function(newValue)
+        sprintSpeed = newValue
+    end
+})
+
+MainTab:AddSection({
+    Name = "Automations"
+})
+
+local Doors = workspace:WaitForChild("Doors")
+
+local AutomaticallyOpenDoors = MainTab:AddToggle({
+    Name = "Automatically Open Doors",
+    Default = false,
+    Flag = "automatically_open_doors",
+    Save = true,
+    Callback = function(isOn)
+    end
+})
+
+task.spawn(function()
+    while task.wait() do
+        if OrionLib.Flags["automatically_open_doors"].Value == true then
+            if not Player.Character then
+                continue
+            end
+
+            for _, door in pairs(Doors:GetChildren()) do
+                if door.Name == "Door" then 
+                    local distance = (door.Main.Position - Player.Character.HumanoidRootPart.Position).Magnitude
+
+                    if distance <= 8 and door.Status.Open.Value == false then
+                        fireclickdetector(door.Detector.ClickDetector)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local AutomaticallyRestorePower = MainTab:AddToggle({
+    Name = "Automatically Restore Power",
+    Default = false,
+    Flag = "automatically_restore_power",
+    Save = true,
+    Callback = function(isOn)
+    end
+})
+
+local FuseBox = workspace:WaitForChild("FuseBox")
+local WarningGUI = FuseBox:WaitForChild("WarningSign"):WaitForChild("BillboardGui")
+
+WarningGUI:GetPropertyChangedSignal("Enabled"):Connect(function()
+    if OrionLib.Flags["automatically_restore_power"].Value == true then
+        if WarningGUI.Enabled == false then return end
+
+        local wrench = Player.Backpack:FindFirstChild("Wrench") or Player.Character:FindFirstChild("Wrench")
+        
+        if wrench == nil then return end
+
+        local originalPosition = Player.Character.HumanoidRootPart.CFrame
+
+        Character.HumanoidRootPart.CFrame = CFrame.new(-1.7270968, 4.49999857, -91.3651733, -0.999955058, 7.80579441e-08, -0.00948043261, 7.75318725e-08, 1, 5.58571998e-08, 0.00948043261, 5.51196528e-08, -0.999955058)
+        task.wait(0.1)
+
+        if FuseBox.Status.Open.Value == false then
+            repeat
+                fireclickdetector(FuseBox.Model.Detector.ClickDetector)
+                task.wait()
+            until FuseBox.Status.Open.Value == true
+        end
+
+        wrench.Parent = Player.Character
+
+        for _, wire in pairs(FuseBox.Wires:GetChildren()) do
+            if wire.Sparkles.Enabled == true then
+                Remotes.ClickWire:FireServer(wire)
+            end
+        end
+
+        wrench.Parent = Player.Backpack
+        Character.HumanoidRootPart.CFrame = originalPosition
+    end
+end)
+
+local AutomaticallyRestoreFuel = MainTab:AddToggle({
+    Name = "Automatically Restore Fuel",
+    Default = false,
+    Flag = "automatically_restore_fuel",
+    Save = true,
+    Callback = function(isOn)
+    end
+})
+
+local Shack = workspace:WaitForChild("Shack")
+local WarningGUI_Shack = Shack:WaitForChild("Generator"):WaitForChild("WarningSign"):WaitForChild("BillboardGui")
+
+WarningGUI_Shack:GetPropertyChangedSignal("Enabled"):Connect(function()
+    if OrionLib.Flags["automatically_restore_fuel"].Value == true then
+        if WarningGUI_Shack.Enabled == false then return end
+
+        local originalPosition = Player.Character.HumanoidRootPart.CFrame
+
+        Character.HumanoidRootPart.CFrame = CFrame.new(-79.7254257, 4.67498064, -132.755371, 0.999983847, 1.62270264e-09, 0.00568361348, -2.22811014e-09, 1, 1.0651172e-07, -0.00568361348, -1.06522663e-07, 0.999983847)
+        task.wait(0.1)
+
+        repeat
+            repeat
+                fireclickdetector(Shack.JerryCan.ClickDetector)
+                task.wait()
+            until Character:FindFirstChild("JerryCan") ~= nil
+    
+            task.wait(0.1)
+    
+            repeat
+                fireclickdetector(Shack.Generator.ClickDetector)
+                task.wait()
+            until Character:FindFirstChild("JerryCan") == nil
+
+            task.wait()
+        until Shack.Generator.Fuel.Value == 100
+
+        Character.HumanoidRootPart.CFrame = originalPosition
+    end
+end)
+
+local VisualsTab = MainWindow:MakeTab({
+    Name = "Visuals",
+    PremiumOnly = false
+})
+
+Lighting:SetAttribute("Brightness", Lighting.Brightness)
+Lighting:SetAttribute("ClockTime", Lighting.ClockTime)
+Lighting:SetAttribute("FogEnd", Lighting.FogEnd)
+Lighting:SetAttribute("GlobalShadows", Lighting.GlobalShadows)
+Lighting:SetAttribute("OutdoorAmbient", Lighting.OutdoorAmbient)
+
+local Fullbright = VisualsTab:AddToggle({
+    Name = "Fullbright",
+    Default = false,
+    Flag = "fullbright",
+    Save = true,
+    Callback = function(isOn)
+        -- Pasted from infinity yield source
+        fullbrightEnabled = isOn
+
+        if isOn then
+            Lighting.Brightness = 2
+            Lighting.ClockTime = 14
+            Lighting.FogEnd = 100000
+            Lighting.GlobalShadows = false
+            Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+        else
+            Lighting.Brightness = Lighting:GetAttribute("Brightness")
+            Lighting.ClockTime = Lighting:GetAttribute("ClockTime")
+            Lighting.FogEnd = Lighting:GetAttribute("FogEnd")
+            Lighting.GlobalShadows = Lighting:GetAttribute("GlobalShadows")
+            Lighting.OutdoorAmbient = Lighting:GetAttribute("OutdoorAmbient")
+        end
+    end
+})
+
+local UnlockThirdPerson = VisualsTab:AddToggle({
+    Name = "Unlock Third Person",
+    Default = false,
+    Flag = "unlock_third_person",
+    Save = true,
+    Callback = function(isOn)
+        if isOn then
+            Player.CameraMaxZoomDistance = 1000
+            Player.CameraMode = Enum.CameraMode.Classic
+        else
+            Player.CameraMaxZoomDistance = 16
+        end
+    end
+})
+
+local ESPTab = MainWindow:MakeTab({
+    Name = "ESP",
+    PremiumOnly = false
+})
+
+local PlayersESP = ESPTab:AddToggle({
+    Name = "Players ESP",
+    Default = false,
+    Flag = "players_ESP",
+    Save = true,
+    Callback = function(isOn)
+        ESP.Players = isOn
+    end
+})
+
+local ItemSpots = workspace:WaitForChild("ItemSpots")
+
+for _, spot in pairs(ItemSpots:GetChildren()) do
+    local theItem = spot:FindFirstChildOfClass("Tool") or spot:FindFirstChildOfClass("Model")
+
+    spot.ChildAdded:Connect(function(child)
+        if child:IsA("Tool") or child:IsA("Model") then
+            child:WaitForChild("Handle")
+            ESP:Add(child.Handle, {
+                Name = child.Name,
+                Color = Color3.fromRGB(226, 169, 123),
+                IsEnabled = "Items"
+            })
+        end
+    end)
+
+    if not theItem then
+        continue
+    end
+
+    ESP:Add(theItem.Handle, {
+        Name = theItem.Name,
+        Color = Color3.fromRGB(226, 169, 123),
+        IsEnabled = "Items",
+    })
+end
+
+local ItemsESP = ESPTab:AddToggle({
+    Name = "Item ESP",
+    Default = false,
+    Flag = "itemsESP",
+    Save = true,
+    Callback = function(isOn)
+        ESP.Items = isOn
+    end
+})
+
+ESP:AddObjectListener(workspace, {
+    Name = "Mutant",
+    Type = "Model",
+    CustomName = "Mutant",
+    PrimaryPart = function(obj)
+        return obj:WaitForChild("HumanoidRootPart")
+    end,
+    IsEnabled = "Mutant"
+})
+
+local MutantESP = ESPTab:AddToggle({
+    Name = "Mutant ESP",
+    Default = false,
+    Flag = "mutant_ESP",
+    Save = true,
+    Callback = function(isOn)
+        ESP.Mutant = isOn
+    end
+})
+
+OrionLib:Init()
+OrionLib:MakeNotification({
+    Name = "Loaded!",
+    Content = "Created by pixeluted",
+    Time = 8
+})
