@@ -2,6 +2,8 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+-- เหงาเมื่อไหร่เขาคนนั้นจะกลับมา
+
 local Window = Fluent:CreateWindow({
     Title = "Residence Massacre - Kirby hub ",
     SubTitle = "Last updated April 1 2024",
@@ -181,6 +183,19 @@ do
         _G.FullBrightExecuted = true
     end
 
+    -- Infinite Stamina
+    local Toggle = Tabs.General:AddToggle("MyInfinite Stamina", {Title = "Infinite Stamina", Default = false })
+
+    local function newIndexHook(Self, Key, ...)
+        -- Your implementation for newIndexHook function goes here
+    end
+    
+    Toggle:OnChanged(function()
+        if Self.Name == "Stam" and Key == "Value" and OrionLib.Flags["infinite_stamina"].Value == true then
+            newIndexHook(Self, Key, 5, ...)
+        end
+    end)
+
     -- Player Properties
     local section = Tabs.General:AddSection("Player Properties")
 
@@ -213,7 +228,7 @@ do
     end)
 
     -- Jump Powen
-    local Slider = Tabs.Main:AddSlider("Slider", {
+    local Slider = Tabs.General:AddSlider("Slider", {
         Title = "Jump Powen",
         Description = "This is a slider",
         Default = 2,
@@ -226,7 +241,7 @@ do
     })
 
     -- Gravity
-    local Slider = Tabs.Main:AddSlider("Slider", {
+    local Slider = Tabs.General:AddSlider("Slider", {
         Title = "Gravity",
         Description = "This is a slider",
         Default = 2,
