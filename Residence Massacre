@@ -2,6 +2,8 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+-- งงเกิดไรขึ้น?
+
 local Window = Fluent:CreateWindow({
     Title = "Residence Massacre - Kirby hub ",
     SubTitle = "Last updated April 1 2024",
@@ -180,30 +182,7 @@ do
 
         _G.FullBrightExecuted = true
     end
-
-    -- Infinite Stamina
-    local Toggle = Tabs.General:AddToggle("MyInfiniteStamina", {Title = "Infinite Stamina", Default = false })
-
-    local function activateInfiniteStamina()
-        if Self.Name == "Stam" and Key == "Value" and OrionLib.Flags["infinite_stamina"].Value == true then
-            newIndexHook(Self, Key, 5, ...)
-            print("Infinite stamina activated")
-        end
-    end
     
-    local function deactivateInfiniteStamina()
-        print("Infinite stamina deactivated")
-        -- Any other actions you may want to take when turning off the infinite stamina
-    end
-    
-    Toggle:OnChanged(function(isOn)
-        if isOn then
-            activateInfiniteStamina()
-        else
-            deactivateInfiniteStamina()
-        end
-    end)    
-
     -- Player Properties
     local section = Tabs.General:AddSection("Player Properties")
 
