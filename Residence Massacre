@@ -2,6 +2,8 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+-- คิดถึงจัง
+
 local Window = Fluent:CreateWindow({
     Title = "Residence Massacre - Kirby hub ",
     SubTitle = "Last updated April 1 2024",
@@ -207,36 +209,38 @@ do
             WalkSpeedChange(Value)
         end
     })
-    
-    Slider:OnChanged(function(Value)
-        print("Slider changed:", Value)
-    end)
 
     -- Jump Powen
+    ('jpower',{'jumppower','jp'},function(args, speaker)
+        local jpower = args[1] or 50
+        if isNumber(jpower) then
+            if speaker.Character:FindFirstChildOfClass('Humanoid').UseJumpPower then
+                speaker.Character:FindFirstChildOfClass('Humanoid').JumpPower = jpower
+            else
+                speaker.Character:FindFirstChildOfClass('Humanoid').JumpHeight  = jpower
+            end
+        end
+    end)
+    
     local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "Jump Powen",
-        Description = "This is a slider",
-        Default = 2,
-        Min = 0,
-        Max = 5,
+        Title = "Jump Power",
+        Description = "Adjust the jump power",
+        Default = 50,
+        Min = 50,
+        Max = 100,
         Rounding = 1,
         Callback = function(Value)
-            print("Slider was changed:", Value)
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            if character then
+                local humanoid = character:FindFirstChildOfClass('Humanoid')
+                if humanoid then
+                    humanoid.JumpPower = Value
+                end
+            end
         end
     })
-
-    -- Gravity
-    local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "Gravity",
-        Description = "This is a slider",
-        Default = 2,
-        Min = 0,
-        Max = 5,
-        Rounding = 1,
-        Callback = function(Value)
-            print("Slider was changed:", Value)
-        end
-    })
+    
 
     -- field of view
     local Camera = workspace.CurrentCamera
