@@ -179,34 +179,7 @@ do
         end)
 
         _G.FullBrightExecuted = true
-    end
-
-    -- Infinite Stamina
-    local function enableInfiniteStamina()
-        print("Infinite Stamina enabled")
-        -- Add logic here to activate infinite stamina
-        newIndexHook(Self, Key, 5, ...)
-    end
-    
-    local function disableInfiniteStamina()
-        print("Infinite Stamina disabled")
-        -- Add logic here to deactivate infinite stamina
-        -- For now, let's just print a message
-    end
-    
-    if Self.Name == "Stam" and Key == "Value" and OrionLib.Flags["infinite_stamina"].Value == true then
-        enableInfiniteStamina()
-    end
-    
-    local Toggle = Tabs.General:AddToggle("MyInfinite Stamina", {Title = "Infinite Stamina", Flag = "infinite_stamina", Default = false })
-    
-    Toggle:OnChanged(function(isOn)
-        if isOn then
-            enableInfiniteStamina()
-        else
-            disableInfiniteStamina()
-        end
-    end)    
+    end  
 
     -- Player Properties
     local section = Tabs.General:AddSection("Player Properties")
