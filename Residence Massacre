@@ -2,8 +2,6 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- ถ้าได้ร้องไห้จริง
-
 local Window = Fluent:CreateWindow({
     Title = "Residence Massacre - Kirby hub ",
     SubTitle = "Last updated April 1 2024",
@@ -196,7 +194,7 @@ do
         -- For now, let's just print a message
     end
     
-    if Self.Name == "Stam" and Key == "Value" and Fluent.Flags["infinite_stamina"].Value == true then
+    if Self.Name == "Stam" and Key == "Value" and Tabs.Flags["infinite_stamina"].Value == true then
         enableInfiniteStamina()
     end
     
