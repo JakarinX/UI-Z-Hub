@@ -130,6 +130,60 @@ do
 
         _G.FullBrightExecuted = true
     end
+
+    -- Player Properties
+    local section = Tabs.General:AddSection("Player Properties")
+
+    -- Player Speed
+    local function WalkSpeedChange(speed)
+        local speaker = game.Players.LocalPlayer
+        if speaker then
+            local Char = speaker.Character or workspace:FindFirstChild(speaker.Name)
+            local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
+            if Char and Human then
+                Human.WalkSpeed = speed
+            end
+        end
+    end
+    
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "Player Speed",
+        Description = "Adjust the player's speed",
+        Default = 16,
+        Min = 16,
+        Max = 100,
+        Rounding = 1,
+        Callback = function(Value)
+            WalkSpeedChange(Value)
+        end
+    })
+    
+    Slider:OnChanged(function(Value)
+        print("Slider changed:", Value)
+    end)
+    
+    local function UpdateWalkSpeed()
+        local Value = Slider.Value
+        WalkSpeedChange(Value)
+    end
+    
+    UpdateWalkSpeed()
+
+    -- field of view
+    local Camera = workspace.CurrentCamera
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "field of view",
+        Description = "This is a slider",
+        Default = 70,
+        Min = 70,
+        Max = 120,
+        Rounding = 1,
+        Callback = function(Value)
+            Camera.FieldOfView = Value
+            print("Field of view set to:", Value)
+        end
+    })
+
 end
 
 
