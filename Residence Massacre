@@ -2,6 +2,8 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+-- เกิดไรขึ้นอีกงง
+
 local Window = Fluent:CreateWindow({
     Title = "Residence Massacre - Kirby hub ",
     SubTitle = "Last updated April 1 2024",
@@ -207,37 +209,6 @@ do
             WalkSpeedChange(Value)
         end
     })
-
-    -- Jump Powen
-    local jpower = args[1] or 50
-        if isNumber(jpower) then
-            if speaker.Character:FindFirstChildOfClass('Humanoid').UseJumpPower then
-                speaker.Character:FindFirstChildOfClass('Humanoid').JumpPower = jpower
-            else
-                speaker.Character:FindFirstChildOfClass('Humanoid').JumpHeight  = jpower
-            end
-        end
-    end
-    
-    local Slider = Tabs.General:AddSlider("Slider", {
-        Title = "Jump Power",
-        Description = "Adjust the jump power",
-        Default = 50,
-        Min = 50,
-        Max = 100,
-        Rounding = 1,
-        Callback = function(Value)
-            local player = game.Players.LocalPlayer
-            local character = player.Character
-            if character then
-                local humanoid = character:FindFirstChildOfClass('Humanoid')
-                if humanoid then
-                    humanoid.JumpPower = Value
-                end
-            end
-        end
-    })
-    
 
     -- field of view
     local Camera = workspace.CurrentCamera
