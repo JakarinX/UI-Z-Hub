@@ -21,6 +21,56 @@ local Tabs = {
 local Options = Fluent.Options
 
 do 
+    -- 
+    repeat task.wait() until game:IsLoaded()
+
+    local function isAdonisAC(table)
+        return rawget(table, "Detected") and typeof(rawget(table, "Detected")) == "function" and rawget(table, "RLocked")
+    end
+
+    warn("https://discord.gg/BJGq7QqRwn")
+
+    for _, v in next, getgc(true) do
+        if typeof(v) == "table" and isAdonisAC(v) then
+
+            for i, v in next, v do
+                warn(print, i, typeof(v))
+                if rawequal(i, "Detected") then
+
+                    local old;
+                    old = hookfunction(v, function(action, info, nocrash)
+                        if rawequal(action, "_") and rawequal(info, "_") and rawequal(nocrash, true) then
+
+                            return old(action, info, nocrash)
+                        end
+
+                        return task.wait(9e9)
+                    end)
+                    warn("bypassed adonis ac")
+                    break
+                end
+            end
+        end
+    end
+
+    local antiCheatBypass; antiCheatBypass = hookmetamethod(game, "__namecall", function(self, ...)
+        local method = getnamecallmethod()
+    
+        if string.lower(method) == "kick" then
+            return task.wait(9e9)
+        end
+    
+        if string.lower(method) == "fireserver" then
+            if string.lower(self.Name) == "kick" then
+                return task.wait(9e9)
+            end
+        end
+    
+        return antiCheatBypass(self, ...)
+    end)
+    
+    print("sucessfully bypassed client-sided anti-cheat")
+
     -- General
     -- Player Actions
     local section = Tabs.General:AddSection("Player Actions")
@@ -131,6 +181,15 @@ do
         _G.FullBrightExecuted = true
     end
 
+    -- Infinite Stamina
+    Tabs.General:AddButton({
+        Title = "Infinite Stamina",
+        Description = "This button will refresh your character.",
+        Callback = function(isOn)
+
+        end
+    })
+
     -- Player Properties
     local section = Tabs.General:AddSection("Player Properties")
 
@@ -162,13 +221,6 @@ do
         print("Slider changed:", Value)
     end)
     
-    local function UpdateWalkSpeed()
-        local Value = Slider.Value
-        WalkSpeedChange(Value)
-    end
-    
-    UpdateWalkSpeed()
-
     -- field of view
     local Camera = workspace.CurrentCamera
     local Slider = Tabs.General:AddSlider("Slider", {
