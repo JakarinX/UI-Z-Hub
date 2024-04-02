@@ -15,6 +15,7 @@ local Window = Fluent:CreateWindow({
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     General = Window:AddTab({ Title = "General", Icon = "home" }),
+    Visuals = Window:AddTab({ Title = "Visuals", Icon = "eye" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
 }
 
@@ -180,33 +181,6 @@ do
 
         _G.FullBrightExecuted = true
     end  
-
-    -- Infinite Stamina
-    local function enableInfiniteStamina()
-        print("Infinite Stamina enabled")
-        -- Add logic here to activate infinite stamina
-        newIndexHook(Self, Key, 5, ...)
-    end
-    
-    local function disableInfiniteStamina()
-        print("Infinite Stamina disabled")
-        -- Add logic here to deactivate infinite stamina
-        -- For now, let's just print a message
-    end
-    
-    if Self.Name == "Stam" and Key == "Value" and Tabs.Flags["infinite_stamina"].Value == true then
-        enableInfiniteStamina()
-    end
-    
-    local Toggle = Tabs.General:AddToggle("MyInfinite Stamina", {Title = "Infinite Stamina", Flag = "infinite_stamina", Default = false })
-    
-    Toggle:OnChanged(function(isOn)
-        if isOn then
-            enableInfiniteStamina()
-        else
-            disableInfiniteStamina()
-        end
-    end)
     
     -- Player Properties
     local section = Tabs.General:AddSection("Player Properties")
@@ -250,6 +224,37 @@ do
         end
     })
 
+    -- Visuals
+    -- Item ESP
+    local section = Tabs.Visuals:AddSection("Item ESP")
+
+    -- Bloxy Cola
+    local Toggle = Tabs.Visuals:AddToggle("MyBloxyCola", {Title = "Bloxy Cola", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Wrench
+    local Toggle = Tabs.Visuals:AddToggle("MyWrench", {Title = "Wrench", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Flashlight
+    local Toggle = Tabs.Visuals:AddToggle("MyFlashlight", {Title = "Flashlight", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Batter
+    local Toggle = Tabs.Visuals:AddToggle("MyBatter", {Title = "Batter", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
 end
 
 
