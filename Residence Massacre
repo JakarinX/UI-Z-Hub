@@ -1,6 +1,7 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Exunys-ESP/main/src/ESP.lua"))()
 
 local Window = Fluent:CreateWindow({
     Title = "Residence Massacre - Kirby hub ",
@@ -16,6 +17,7 @@ local Window = Fluent:CreateWindow({
 local Tabs = {
     General = Window:AddTab({ Title = "General", Icon = "home" }),
     Visuals = Window:AddTab({ Title = "Visuals", Icon = "eye" }),
+    Properties = Window:AddTab({ Title = "     •Properties", Icon = "" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
 }
 
@@ -225,6 +227,15 @@ do
     })
 
     -- Visuals
+    -- Player ESP
+    local section = Tabs.Visuals:AddSection("Player ESP")
+
+    local Toggle = Tabs.Properties:AddToggle("MyPlayerESP", {Title = "Player ESP", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
     -- Item ESP
     local section = Tabs.Visuals:AddSection("Item ESP")
 
@@ -255,6 +266,75 @@ do
     Toggle:OnChanged(function()
         print("Toggle changed:")
     end)
+
+    -- Properties
+    -- ESP Properties
+    local section = Tabs.Properties:AddSection("ESP Properties")
+
+    -- Enabled
+    local Toggle = Tabs.Properties:AddToggle("MyEnabled", {Title = "Enabled", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Display Distance
+    local Toggle = Tabs.Properties:AddToggle("MyDisplayDistance", {Title = "Display Distance", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Display Name
+    local Toggle = Tabs.Properties:AddToggle("MyDisplayName", {Title = "Display Name", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Colorpicker
+    local Colorpicker = Tabs.Properties:AddColorpicker("Colorpicker", {
+        Title = "Colorpicker",
+        Default = Color3.fromRGB(96, 205, 255)
+    })
+
+    Colorpicker:OnChanged(function()
+        print("Colorpicker changed:", Colorpicker.Value)
+    end)
+    
+    Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
+
+    -- Outline Color
+    local Colorpicker = Tabs.Properties:AddColorpicker("Colorpicker", {
+        Title = "Outline Color",
+        Default = Color3.fromRGB(96, 205, 255)
+    })
+
+    Colorpicker:OnChanged(function()
+        print("Colorpicker changed:", Colorpicker.Value)
+    end)
+    
+    Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
+
+    -- Tracer Properties
+    local section = Tabs.Properties:AddSection("Tracer Properties")
+
+    local Toggle = Tabs.Properties:AddToggle("MyEnabled", {Title = "Enabled", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    local Colorpicker = Tabs.Properties:AddColorpicker("Colorpicker", {
+        Title = "Colorpicker",
+        Default = Color3.fromRGB(96, 205, 255)
+    })
+
+    Colorpicker:OnChanged(function()
+        print("Colorpicker changed:", Colorpicker.Value)
+    end)
+    
+    Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
 end
 
 
