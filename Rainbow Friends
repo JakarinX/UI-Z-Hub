@@ -2,6 +2,8 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+-- FAWGAFAWFA56456465fawffaw56a56
+
 local Window = Fluent:CreateWindow({
     Title = "Rainbow Friends - Kirby hub ",
     SubTitle = "6/4/2567",
@@ -193,7 +195,7 @@ do
     end
     
     -- Example of how you might use a toggle UI element
-    local Toggle = Tabs.Main:AddToggle("MyNoclip", {Title = "Noclip", Default = false})
+    local Toggle = Tabs.General:AddToggle("MyNoclip", {Title = "Noclip", Default = false})
     
     Toggle:OnChanged(function(enabled)
         if enabled then
