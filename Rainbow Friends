@@ -2,8 +2,6 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- Bruhลืมลบ
-
 local Window = Fluent:CreateWindow({
     Title = "Rainbow Friends - Kirby hub ",
     SubTitle = "6/4/2567",
@@ -157,11 +155,53 @@ do
         end
     end
     
-    local Toggle = Tabs.General:AddToggle("Infinite Jump", {Title = "Toggle", Default = false})
+    local Toggle = Tabs.General:AddToggle("MyInfiniteJump", {Title = "Infinite Jump", Default = false})
     
     Toggle:OnChanged(function(enabled)
         ToggleInfiniteJump(enabled)
     end) 
+
+    local RunService = game:GetService("RunService") -- Ensure RunService is available
+    local Noclipping = nil
+    local Clip = true -- Set Clip to true by default
+    local floatName = "SomeFloatName" -- Define floatName, which seems to be used in your script
+    
+    local function NoclipLoop(speaker) -- Pass 'speaker' as an argument to the function
+        if Clip == false and speaker.Character then
+            for _, child in ipairs(speaker.Character:GetDescendants()) do
+                if child:IsA("BasePart") and child.CanCollide then -- No need to check for equality to true
+                    child.CanCollide = false
+                end
+            end
+        end
+    end
+    
+    -- Connect NoclipLoop function to RunService.Stepped event
+    Noclipping = RunService.Stepped:Connect(function()
+        local player = game.Players.LocalPlayer -- Assuming you're working with the local player
+        if player then
+            NoclipLoop(player)
+        end
+    end)
+    
+    -- Function to stop the noclip and set Clip to true
+    local function StopNoclip()
+        if Noclipping then
+            Noclipping:Disconnect() -- Disconnect the Noclipping event
+        end
+        Clip = true
+    end
+    
+    -- Example of how you might use a toggle UI element
+    local Toggle = Tabs.Main:AddToggle("MyNoclip", {Title = "Noclip", Default = false})
+    
+    Toggle:OnChanged(function(enabled)
+        if enabled then
+            Clip = false -- Enable noclip by setting Clip to false
+        else
+            StopNoclip() -- Call the function to stop noclip if the toggle is disabled
+        end
+    end)    
 
     -- Player Properties
     local section = Tabs.General:AddSection("Player Properties")
