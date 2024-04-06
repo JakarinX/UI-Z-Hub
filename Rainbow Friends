@@ -52,6 +52,34 @@ do
         end
     })
 
+    -- Jump Power
+    local jpower = 50
+
+    local function setJumpPower(value)
+        local speaker = game.Players.LocalPlayer
+        if speaker.Character and speaker.Character:FindFirstChildOfClass('Humanoid') then
+            if speaker.Character:FindFirstChildOfClass('Humanoid').UseJumpPower then
+                speaker.Character:FindFirstChildOfClass('Humanoid').JumpPower = value
+            else
+                speaker.Character:FindFirstChildOfClass('Humanoid').JumpHeight = value
+            end
+        end
+    end
+    
+    local Slider = Tabs.General:AddSlider("Slider", {
+        Title = "Jump Power",
+        Description = "Adjust the player's jump power",
+        Default = 50,
+        Min = 50,
+        Max = 100,
+        Rounding = 1,
+        Callback = function(value)
+            jpower = value
+            setJumpPower(jpower)
+        end
+    })
+    
+
     -- field of view
     local Camera = workspace.CurrentCamera
     local Slider = Tabs.General:AddSlider("Slider", {
