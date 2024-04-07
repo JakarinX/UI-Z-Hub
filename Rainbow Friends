@@ -279,9 +279,6 @@ do
     Toggle:OnChanged(function()
         print("Toggle changed:")
     end)
-
-    -- Player ESP
-    local section = Tabs.Visuals:AddSection("Player ESP")
 end
 
 
