@@ -1,6 +1,7 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()|
+local ESPLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Exunys-ESP/main/src/ESP.lua"))()
 
 local Window = Fluent:CreateWindow({
     Title = "Rainbow Friends - Kirby hub ",
@@ -15,6 +16,7 @@ local Window = Fluent:CreateWindow({
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     General = Window:AddTab({ Title = "General", Icon = "home" }),
+    Visuals = Window:AddTab({ Title = "Visuals", Icon = "eye" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
 }
 
@@ -230,6 +232,56 @@ do
             print("Field of view set to:", Value)
         end
     })
+
+    -- Visuals
+    -- Player ESP
+    local section = Tabs.Visuals:AddSection("Player ESP")
+
+    local Toggle = Tabs.Properties:AddToggle("MyPlayerESP", {Title = "Player ESP", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Item ESP
+    local section = Tabs.Visuals:AddSection("Item ESP")
+
+    local Toggle = Tabs.Visuals:AddToggle("MyBlocks", {Title = "Blocks", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Box
+    local Toggle = Tabs.Properties:AddToggle("MyBox", {Title = "Box", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Display Distance
+    local Toggle = Tabs.Properties:AddToggle("MyDisplayDistance", {Title = "Display Distance", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Tracer
+    local Toggle = Tabs.Properties:AddToggle("MyTracer", {Title = "Tracer", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Display Name
+    local Toggle = Tabs.Properties:AddToggle("MyDisplayName", {Title = "Display Name", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:")
+    end)
+
+    -- Player ESP
+    local section = Tabs.Visuals:AddSection("Player ESP")
 end
 
 
@@ -261,7 +313,7 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 Window:SelectTab(1)
 
 Fluent:Notify({
-    Title = "Fluent",
+    Title = "Kirby hub",
     Content = "The script has been loaded.",
     Duration = 8
 })
